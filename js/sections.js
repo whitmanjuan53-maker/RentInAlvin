@@ -438,7 +438,7 @@ function AlvinMap({
           scrollWheelZoom: false,
           attributionControl: false,
           zoomControl: true
-        }).setView([29.415, -95.240], 13);
+        });
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -448,6 +448,7 @@ function AlvinMap({
           prefix: false
         }).addTo(map);
         const markers = [];
+        const latLngs = [];
         props.forEach(m => {
           const isOffice = m.office;
           const markerColor = isOffice ? p.accent : p.primary;
@@ -481,8 +482,9 @@ function AlvinMap({
               <div style="font-family:'${displayFont}',serif;font-size:16px;color:#2D2D2D;line-height:1.2;font-weight:400;">${m.name}</div>
               <div style="font-size:12px;color:#5A5A5A;margin-top:4px;">${m.fullAddr}${isOffice ? " · Leasing office" : ""}</div>
               <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">Get directions</a>
-                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">View property</a>
+                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">View Details</a>
+                <a href="book-tour.html?property=${m.slug}" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">Book a Tour</a>
+                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:${p.bg};color:${p.ink};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.line};letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">Directions</a>
               </div>
             </div>
           `;
@@ -500,31 +502,29 @@ function AlvinMap({
           marker.on("click", () => {
             setActive(m.id);
           });
+          latLngs.push([m.lat, m.lng]);
           markers.push(marker);
         });
+        if (latLngs.length > 0) {
+          const bounds = L.latLngBounds(latLngs);
+          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+        }
         mapInstanceRef.current = map;
         markersRef.current = markers;
         setMapLoaded(true);
 
-        // Robust size recalculation after layout fully settles
+        // Ensure Leaflet recalculates container dimensions after layout settles
         const fixSize = () => {
           if (!map) return;
           map.invalidateSize({
             animate: false,
             pan: false
           });
-          // Reset pixel origin to fix tile drift
-          const center = map.getCenter();
-          const zoom = map.getZoom();
-          map.setView(center, zoom, {
-            animate: false
-          });
         };
         requestAnimationFrame(fixSize);
         setTimeout(fixSize, 200);
         setTimeout(fixSize, 500);
         setTimeout(fixSize, 1000);
-        setTimeout(fixSize, 2000);
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
@@ -603,14 +603,14 @@ function AlvinMap({
       color: p.ink,
       marginBottom: 8
     }
-  }, "Map unavailable right now."), /*#__PURE__*/React.createElement("p", {
+  }, "Map is currently unavailable."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 15,
       color: p.inkSoft,
       margin: "0 auto 20px",
       lineHeight: 1.55
     }
-  }, "Use the directions links below to find each property."), /*#__PURE__*/React.createElement("div", {
+  }, "Please view the property list or contact us for directions."), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexDirection: "column",
@@ -812,7 +812,6 @@ function AlvinMap({
       key: m.id,
       role: "button",
       tabIndex: 0,
-      onMouseEnter: () => setActive(m.id),
       onClick: () => setActive(m.id),
       onKeyDown: e => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -868,22 +867,18 @@ function AlvinMap({
         color: p.inkSoft,
         marginTop: 2
       }
-    }, m.addr, m.office ? " · Leasing office" : "")), /*#__PURE__*/React.createElement("a", {
-      href: `property-detail.html?property=${m.slug}`,
-      onClick: e => e.stopPropagation(),
+    }, m.addr, m.office ? " · Leasing office" : "")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         fontWeight: 600,
         color: p.primary,
-        textDecoration: "none",
         flexShrink: 0,
         padding: "4px 8px",
         borderRadius: 6,
+        background: selected ? p.bg : "transparent",
         transition: "background 160ms ease"
-      },
-      onMouseOver: e => e.currentTarget.style.background = p.bg,
-      onMouseOut: e => e.currentTarget.style.background = "transparent"
-    }, "View \u2192"));
+      }
+    }, selected ? "Showing" : "View"));
   })), /*#__PURE__*/React.createElement("div", {
     ref: mapContainerRef,
     className: "ys-map-wrap",

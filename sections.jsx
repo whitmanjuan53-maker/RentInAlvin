@@ -212,7 +212,15 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
   // Handle window resize to re-calculate map size
   useEffectS(() => {
     const handleResize = () => {
-      if (mapInstanceRef.current) {
+      if (mapInstanceRef.current && mapRef.current) {
+        const container = mapRef.current;
+        const parent = container.parentElement;
+        const w = parent ? parent.clientWidth : container.clientWidth;
+        const h = parent ? parent.clientHeight : container.clientHeight;
+        if (w > 0 && h > 0) {
+          container.style.width = w + "px";
+          container.style.height = h + "px";
+        }
         mapInstanceRef.current.invalidateSize({ animate: false, pan: false });
       }
     };
@@ -252,7 +260,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
           scrollWheelZoom: false,
           attributionControl: false,
           zoomControl: true
-        }).setView([29.415, -95.240], 13);
+        });
 
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
@@ -262,6 +270,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
         L.control.attribution({ position: "bottomright", prefix: false }).addTo(map);
 
         const markers = [];
+        const latLngs = [];
         props.forEach((m) => {
           const isOffice = m.office;
           const markerColor = isOffice ? p.accent : p.primary;
@@ -296,8 +305,9 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
               <div style="font-family:'${displayFont}',serif;font-size:16px;color:#2D2D2D;line-height:1.2;font-weight:400;">${m.name}</div>
               <div style="font-size:12px;color:#5A5A5A;margin-top:4px;">${m.fullAddr}${isOffice ? " · Leasing office" : ""}</div>
               <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">Get directions</a>
-                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;">View property</a>
+                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">View Details</a>
+                <a href="book-tour.html?property=${m.slug}" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">Book a Tour</a>
+                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:80px;text-align:center;padding:10px 0;background:${p.bg};color:${p.ink};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.line};letter-spacing:0.01em;min-height:40px;display:flex;align-items:center;justify-content:center;">Directions</a>
               </div>
             </div>
           `;
@@ -317,27 +327,29 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
             setActive(m.id);
           });
 
+          latLngs.push([m.lat, m.lng]);
           markers.push(marker);
         });
+
+        // Fit bounds to show all markers with padding
+        if (latLngs.length > 0) {
+          const bounds = L.latLngBounds(latLngs);
+          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+        }
 
         mapInstanceRef.current = map;
         markersRef.current = markers;
         setMapLoaded(true);
 
-        // Robust size recalculation after layout fully settles
+        // Ensure Leaflet recalculates container dimensions after layout settles
         const fixSize = () => {
           if (!map) return;
           map.invalidateSize({ animate: false, pan: false });
-          // Reset pixel origin to fix tile drift
-          const center = map.getCenter();
-          const zoom = map.getZoom();
-          map.setView(center, zoom, { animate: false });
         };
         requestAnimationFrame(fixSize);
         setTimeout(fixSize, 200);
         setTimeout(fixSize, 500);
         setTimeout(fixSize, 1000);
-        setTimeout(fixSize, 2000);
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
@@ -395,10 +407,10 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
       <div style={{ maxWidth: "34ch" }}>
         <div style={{ fontSize: 36, marginBottom: 12 }}>🗺️</div>
         <div style={{ fontFamily: `'${displayFont}', serif`, fontSize: 20, color: p.ink, marginBottom: 8 }}>
-          Map unavailable right now.
+          Map is currently unavailable.
         </div>
         <p style={{ fontSize: 15, color: p.inkSoft, margin: "0 auto 20px", lineHeight: 1.55 }}>
-          Use the directions links below to find each property.
+          Please view the property list or contact us for directions.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
           {props.map(m => (
@@ -521,7 +533,6 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
                     key={m.id}
                     role="button"
                     tabIndex={0}
-                    onMouseEnter={() => setActive(m.id)}
                     onClick={() => setActive(m.id)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(m.id); } }}
                     style={{
@@ -553,15 +564,14 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
                         {m.addr}{m.office ? " · Leasing office" : ""}
                       </div>
                     </div>
-                    <a href={`property-detail.html?property=${m.slug}`} onClick={(e) => e.stopPropagation()} style={{
-                      fontSize: 12, fontWeight: 600, color: p.primary, textDecoration: "none",
+                    <span style={{
+                      fontSize: 12, fontWeight: 600, color: p.primary,
                       flexShrink: 0, padding: "4px 8px", borderRadius: 6,
+                      background: selected ? p.bg : "transparent",
                       transition: "background 160ms ease"
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.background = p.bg}
-                    onMouseOut={(e) => e.currentTarget.style.background = "transparent"}>
-                      View →
-                    </a>
+                    }}>
+                      {selected ? "Showing" : "View"}
+                    </span>
                   </div>
                 );
               })}

@@ -141,14 +141,8 @@
     .ys-map-popup a.leaflet-popup-close-button { color: #2D2D2D; font-size: 18px; top: 6px; right: 6px; width: 24px; height: 24px; text-align: center; line-height: 24px; background: rgba(255,255,255,0.85); border-radius: 50%; }
     @media (max-width: 540px) { .ys-map-popup .leaflet-popup-content-wrapper { max-width: 240px; } }
 
-    /* Leaflet map tile rendering fixes */
+    /* Leaflet map container background fallback */
     .leaflet-container { background: #f0f0f0 !important; }
-    .leaflet-tile-container img { will-change: auto !important; }
-    .leaflet-map-pane { transform: none !important; }
-    .leaflet-tile { border: none !important; }
-    .ys-map-wrap .leaflet-container { width: 100% !important; height: 100% !important; }
-    /* Force hardware acceleration off for map to prevent tile offset */
-    .leaflet-tile-loaded { transform: none !important; }
     @media (max-width: 960px) {
       .ys-ig-grid { grid-template-columns: repeat(3, 1fr) !important; }
       :root {
