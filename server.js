@@ -381,7 +381,10 @@ app.post('/api/submit/inquiry', formLimiter, (req, res) => {
 // Static files
 // ============================================================
 
-app.use(express.static(path.join(__dirname), {
+// Serve static assets with proper content types
+// Use process.cwd() for Vercel compatibility (serverless __dirname != project root)
+const STATIC_ROOT = process.env.VERCEL ? process.cwd() : __dirname;
+app.use(express.static(path.join(STATIC_ROOT), {
   setHeaders: (res, filepath) => {
     if (filepath.endsWith('.jsx')) {
       res.setHeader('Content-Type', 'text/javascript');
@@ -394,7 +397,12 @@ app.use((req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'Not found' });
   }
-  res.sendFile(path.join(__dirname, 'index.html'));
+  // Only serve index.html for non-file paths (SPA fallback)
+  const ext = path.extname(req.path);
+  if (ext && ext !== '.html') {
+    return res.status(404).json({ error: 'Not found' });
+  }
+  res.sendFile(path.join(STATIC_ROOT, 'index.html'));
 });
 
 // Error handler
