@@ -191,7 +191,7 @@ function getMapProps() {
 
 function AlvinMap({ p, displayFont, focusedProperty }) {
   const props = useMemoS(() => getMapProps(), []);
-  const [active, setActive] = useStateS(0);
+  const [active, setActive] = useStateS(-1);
   const [mapError, setMapError] = useStateS(false);
   const [isMobile, setIsMobile] = useStateS(false);
   const [mapLoaded, setMapLoaded] = useStateS(false);

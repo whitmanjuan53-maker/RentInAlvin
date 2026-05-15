@@ -367,7 +367,7 @@ function AlvinMap({
   focusedProperty
 }) {
   const props = useMemoS(() => getMapProps(), []);
-  const [active, setActive] = useStateS(0);
+  const [active, setActive] = useStateS(-1);
   const [mapError, setMapError] = useStateS(false);
   const [isMobile, setIsMobile] = useStateS(false);
   const [mapLoaded, setMapLoaded] = useStateS(false);
@@ -389,7 +389,15 @@ function AlvinMap({
   // Handle window resize to re-calculate map size
   useEffectS(() => {
     const handleResize = () => {
-      if (mapInstanceRef.current) {
+      if (mapInstanceRef.current && mapRef.current) {
+        const container = mapRef.current;
+        const parent = container.parentElement;
+        const w = parent ? parent.clientWidth : container.clientWidth;
+        const h = parent ? parent.clientHeight : container.clientHeight;
+        if (w > 0 && h > 0) {
+          container.style.width = w + "px";
+          container.style.height = h + "px";
+        }
         mapInstanceRef.current.invalidateSize({
           animate: false,
           pan: false

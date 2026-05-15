@@ -108,9 +108,12 @@
 
     /* Leaflet map tile rendering fixes */
     .leaflet-container { background: #f0f0f0 !important; }
-    .leaflet-tile-container img { will-change: transform; backface-visibility: hidden; }
-    .leaflet-map-pane { transform: translate3d(0,0,0); }
-    .leaflet-tile { border: none !important; clip: auto !important; }
+    .leaflet-tile-container img { will-change: auto !important; }
+    .leaflet-map-pane { transform: none !important; }
+    .leaflet-tile { border: none !important; }
+    .ys-map-wrap .leaflet-container { width: 100% !important; height: 100% !important; }
+    /* Force hardware acceleration off for map to prevent tile offset */
+    .leaflet-tile-loaded { transform: none !important; }
 
     /* Hero background video / image */
     .ys-hero-media {
