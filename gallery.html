@@ -18,40 +18,29 @@
     ::selection { background: #1F3A2E; color: #FBF7F0; }
     html { scroll-behavior: smooth; }
     :root { --pad-x: 40px; --pad-x-lg: 80px; }
-    .ys-gallery-grid { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
-    .ys-gallery-grid > div { aspect-ratio: 4/3; }
-    .ys-gallery-grid > div:nth-child(4n+1) { aspect-ratio: 3/4; }
-    .ys-gallery-grid > div:nth-child(4n+2) { aspect-ratio: 16/9; }
-    .ys-gallery-grid > div:nth-child(4n+3) { aspect-ratio: 1/1; }
+
+    /* Gallery layout */
+    .ys-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .ys-gallery-thumb {
+      aspect-ratio: 4 / 3;
+    }
+
     @media (max-width: 960px) {
       :root { --pad-x: 24px; --pad-x-lg: 48px; }
       .ys-nav-links { display: none !important; }
       .ys-nav-burger { display: flex !important; }
       .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
-      .ys-gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .ys-gallery-grid > div:nth-child(n) { aspect-ratio: 4/3; }
+      .ys-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
+
     @media (max-width: 640px) {
       :root { --pad-x: 20px; --pad-x-lg: 40px; }
       .ys-footer-grid { grid-template-columns: 1fr !important; }
-      .ys-gallery-grid {
-        display: flex !important;
-        grid-template-columns: none !important;
-        gap: 10px !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        padding-bottom: 16px !important;
-        scrollbar-width: none;
-      }
-      .ys-gallery-grid::-webkit-scrollbar { display: none; }
-      .ys-gallery-grid > div {
-        flex: 0 0 82vw !important;
-        scroll-snap-align: start !important;
-        width: 82vw !important;
-        aspect-ratio: 4/3 !important;
-      }
-      .ys-gallery-grid > div:nth-child(n) { aspect-ratio: 4/3 !important; }
+      .ys-gallery-grid { grid-template-columns: 1fr; gap: 12px; }
     }
   </style>
 </head>

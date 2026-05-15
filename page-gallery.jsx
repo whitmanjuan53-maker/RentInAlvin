@@ -205,48 +205,109 @@ function GalleryPage() {
               img => img && typeof img === "string" && img.startsWith("http")
             );
             if (images.length === 0) return null;
+
+            const hero = images[0];
+            const rest = images.slice(1);
+
             return (
-              <div key={prop.id} style={{ marginBottom: 64 }}>
-                <h3 style={{
-                  fontFamily: `'${displayFont}', serif`,
-                  fontSize: "clamp(24px, 2.5vw, 32px)",
-                  fontWeight: 400, letterSpacing: "-0.01em",
-                  margin: "0 0 20px", color: p.ink
-                }}>{prop.name}</h3>
-                <div className="ys-gallery-grid" style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-                  gap: 12
+              <div key={prop.id} style={{
+                marginBottom: 72,
+                background: p.paper,
+                border: `1px solid ${p.line}`,
+                borderRadius: 16,
+                padding: "28px 28px 32px",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04)"
+              }}>
+                {/* Property header */}
+                <div style={{
+                  display: "flex", alignItems: "baseline", justifyContent: "space-between",
+                  flexWrap: "wrap", gap: "8px 16px", marginBottom: 20
                 }}>
-                  {images.map((img, i) => (
-                    <div
-                      key={i}
-                      onClick={() => setLightbox({ images, index: i, propName: prop.name })}
-                      style={{
-                        position: "relative",
-                        minHeight: 120,
-                        background: p.paper,
-                        border: `1px solid ${p.line}`,
-                        borderRadius: 8,
-                        overflow: "hidden",
-                        cursor: "pointer"
-                      }}
-                    >
-                      <img
-                        src={img}
-                        alt={`${prop.name} - photo ${i + 1}`}
-                        loading="lazy"
-                        style={{
-                          position: "absolute", inset: 0,
-                          width: "100%", height: "100%", objectFit: "cover", display: "block",
-                          transition: "transform 400ms ease"
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.04)"}
-                        onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
-                      />
-                    </div>
-                  ))}
+                  <h3 style={{
+                    fontFamily: `'${displayFont}', serif`,
+                    fontSize: "clamp(22px, 2.2vw, 30px)",
+                    fontWeight: 400, letterSpacing: "-0.01em",
+                    margin: 0, color: p.ink
+                  }}>{prop.name}</h3>
+                  <span style={{ fontSize: 13, color: p.inkSoft, fontWeight: 500 }}>
+                    {images.length} photo{images.length !== 1 ? "s" : ""}
+                  </span>
                 </div>
+
+                {/* Featured hero */}
+                <div
+                  onClick={() => setLightbox({ images, index: 0, propName: prop.name })}
+                  className="ys-gallery-hero"
+                  style={{
+                    position: "relative",
+                    borderRadius: 12,
+                    overflow: "hidden",
+                    cursor: "pointer",
+                    marginBottom: 16,
+                    background: p.bg,
+                    aspectRatio: "16 / 9"
+                  }}
+                >
+                  <img
+                    src={hero}
+                    alt={`${prop.name} - featured`}
+                    loading="lazy"
+                    style={{
+                      position: "absolute", inset: 0,
+                      width: "100%", height: "100%", objectFit: "cover", display: "block",
+                      transition: "transform 500ms ease"
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.03)"}
+                    onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                  />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 40%)",
+                    pointerEvents: "none"
+                  }} />
+                  <span style={{
+                    position: "absolute", bottom: 16, left: 16,
+                    color: "#fff", fontSize: 13, fontWeight: 600,
+                    letterSpacing: "0.05em", textTransform: "uppercase",
+                    background: "rgba(0,0,0,0.45)", padding: "4px 10px",
+                    borderRadius: 6, backdropFilter: "blur(4px)"
+                  }}>
+                    Featured
+                  </span>
+                </div>
+
+                {/* Thumbnail grid */}
+                {rest.length > 0 && (
+                  <div className="ys-gallery-grid">
+                    {rest.map((img, i) => (
+                      <div
+                        key={i}
+                        onClick={() => setLightbox({ images, index: i + 1, propName: prop.name })}
+                        className="ys-gallery-thumb"
+                        style={{
+                          position: "relative",
+                          background: p.bg,
+                          borderRadius: 10,
+                          overflow: "hidden",
+                          cursor: "pointer"
+                        }}
+                      >
+                        <img
+                          src={img}
+                          alt={`${prop.name} - photo ${i + 2}`}
+                          loading="lazy"
+                          style={{
+                            position: "absolute", inset: 0,
+                            width: "100%", height: "100%", objectFit: "cover", display: "block",
+                                    transition: "transform 400ms ease"
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                          onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}
