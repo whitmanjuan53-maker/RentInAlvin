@@ -649,6 +649,7 @@ function PropertyCard({
       display: "flex",
       justifyContent: "space-between",
       alignItems: "baseline",
+      flexWrap: "wrap",
       paddingTop: 14,
       borderTop: `1px solid ${p.line}`,
       gap: 12
@@ -1184,6 +1185,7 @@ function Contact({
       marginTop: 16,
       display: "flex",
       gap: 24,
+      flexWrap: "wrap",
       fontSize: 13,
       color: p.inkSoft
     }
@@ -1265,6 +1267,7 @@ function Contact({
       display: "flex",
       justifyContent: "space-between",
       alignItems: "baseline",
+      flexWrap: "wrap",
       fontSize: 11,
       letterSpacing: "0.08em",
       textTransform: "uppercase",
@@ -1458,7 +1461,7 @@ function Footer({
     textDecoration: "none",
     padding: "8px 0",
     transition: "color 200ms ease, transform 200ms ease",
-    minHeight: 36
+    minHeight: 44
   };
   const headingStyle = {
     color: p.paper,

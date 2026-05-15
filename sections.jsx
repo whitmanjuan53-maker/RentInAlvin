@@ -78,7 +78,7 @@ function Availability({ p, displayFont, limit, compact }) {
 
         <div className="ys-avail-grid" style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
           gap: 16
         }}>
           {filtered.length === 0 && (
@@ -266,14 +266,14 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
           const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(m.fullAddr)}`;
 
           const popupEl = document.createElement("div");
-          popupEl.style.cssText = "font-family:'Source Sans 3',sans-serif;min-width:220px;max-width:260px;";
+          popupEl.style.cssText = "font-family:'Source Sans 3',sans-serif;min-width:180px;max-width:min(240px, 80vw);";
           popupEl.innerHTML = `
             <div style="padding:14px 16px 16px;">
               <div style="font-family:'${displayFont}',serif;font-size:16px;color:#2D2D2D;line-height:1.2;font-weight:400;">${m.name}</div>
               <div style="font-size:12px;color:#5A5A5A;margin-top:4px;">${m.fullAddr}${isOffice ? " · Leasing office" : ""}</div>
               <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-align:center;padding:9px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;letter-spacing:0.01em;">Get directions</a>
-                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:9px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;">View property</a>
+                <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">Get directions</a>
+                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;">View property</a>
               </div>
             </div>
           `;
@@ -350,7 +350,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
   const Fallback = () => (
     <div style={{
       position: "relative",
-      height: isMobile ? 380 : "clamp(420px, 55vh, 580px)",
+      height: isMobile ? "clamp(280px, 42vh, 420px)" : "clamp(420px, 55vh, 580px)",
       background: p.bg,
       border: `1px solid ${p.line}`,
       borderRadius: 12,
@@ -418,9 +418,12 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
             {props.map(m => {
               const selected = active === m.id;
               return (
-                <button
+                <div
                   key={m.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => handleListClick(m.id)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleListClick(m.id); } }}
                   style={{
                     flex: "0 0 auto",
                     width: 220,
@@ -465,7 +468,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
                       <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7m0 0L6.5 3m3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
                     </a>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
@@ -480,10 +483,13 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
               {props.map(m => {
                 const selected = active === m.id;
                 return (
-                  <button
+                  <div
                     key={m.id}
+                    role="button"
+                    tabIndex={0}
                     onMouseEnter={() => setActive(m.id)}
                     onClick={() => setActive(m.id)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(m.id); } }}
                     style={{
                       textAlign: "left", padding: "14px 16px",
                       background: selected ? p.paper : "transparent",
@@ -522,7 +528,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
                     onMouseOut={(e) => e.currentTarget.style.background = "transparent"}>
                       View →
                     </a>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -539,7 +545,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
               border: `1px solid ${p.line}`,
               borderRadius: 12,
               overflow: "hidden",
-              touchAction: "pan-y"
+              touchAction: "auto"
             }}
           >
             {mapError ? (

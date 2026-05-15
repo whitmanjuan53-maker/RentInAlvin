@@ -213,7 +213,7 @@ function PropertyDetailPage() {
               )}
 
               {/* Price & units */}
-              <div style={{
+              <div className="ys-detail-meta" style={{
                 padding: "20px 0", borderTop: `1px solid ${p.line}`, borderBottom: `1px solid ${p.line}`,
                 display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20
               }}>
@@ -318,7 +318,7 @@ function PropertyDetailPage() {
                   }}>
                     {f.type}
                   </h3>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 4 }}>
+                  <div className="ys-floor-meta" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 4 }}>
                     <div>
                       <div style={{ fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: p.inkSoft, fontWeight: 500, marginBottom: 2 }}>Sq ft</div>
                       <div style={{ fontSize: 15 }}>{f.sqft}</div>

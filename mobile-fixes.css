@@ -64,3 +64,262 @@ iframe {
     font-size: 13px !important;
   }
 }
+
+/* ============================================================
+   COMPREHENSIVE MOBILE RESPONSIVENESS FIXES
+   These override inline styles across all pages
+============================================================ */
+
+/* Master tablet breakpoint — collapse all major grids */
+@media (max-width: 960px) {
+  .ys-nav-links { display: none !important; }
+  .ys-nav-burger { display: flex !important; }
+  .ys-section-head { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .ys-map-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .ys-faq-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .ys-apply-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .ys-sell-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .ys-form-grid { grid-template-columns: 1fr !important; }
+  .ys-hero-row { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .ys-hero-stats { grid-template-columns: 1fr 1fr !important; gap: 24px 16px !important; }
+  .ys-hero-stats > div { border-left: none !important; padding-left: 0 !important; }
+  .ys-prop-grid { grid-template-columns: 1fr !important; }
+  .ys-floor-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .ys-floor-detail { position: static !important; padding: 28px !important; }
+  .ys-about-grid { grid-template-columns: 1fr !important; }
+  .ys-contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+  .ys-detail-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+  .ys-thumb-row { flex-wrap: wrap !important; overflow-x: visible !important; }
+  .ys-location-hero { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .ys-gallery-grid { grid-template-columns: 1fr 1fr !important; }
+  .ys-book-row { grid-template-columns: 1fr !important; }
+  .ys-apply-stepper { display: flex !important; overflow-x: auto; gap: 8px; }
+  .ys-avail-grid { grid-template-columns: 1fr !important; }
+  .ys-req-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 540px) {
+  :root {
+    --pad-x: 20px;
+    --pad-x-lg: 40px;
+  }
+  .ys-hero-stats { grid-template-columns: 1fr !important; }
+  .ys-footer-grid { grid-template-columns: 1fr !important; }
+  .ys-gallery-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Reduce excessive section padding on mobile */
+@media (max-width: 540px) {
+  section[style*="padding: 80px"],
+  section[style*="padding: 100px"],
+  section[style*="padding: 120px"],
+  section[style*="padding: 140px"] {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+}
+
+/* Property card padding reduction on mobile */
+@media (max-width: 540px) {
+  .ys-prop-grid > div,
+  [class*="ys-prop"] > div {
+    padding: 16px !important;
+  }
+}
+
+/* Form label sizing — prevent tiny uppercase labels */
+@media (max-width: 540px) {
+  label > span:first-child,
+  .ys-popup-card label span,
+  form span[style*="font-size: 11"] {
+    font-size: 12px !important;
+  }
+}
+
+/* Contact form padding reduction on mobile */
+@media (max-width: 540px) {
+  .ys-popup-card form,
+  form[style*="padding: 32px 36px"] {
+    padding: 20px 16px !important;
+  }
+}
+
+/* Footer social icons — increase tap targets */
+@media (max-width: 540px) {
+  .ys-footer-grid a[href*="instagram"],
+  .ys-footer-grid a[href*="facebook"],
+  .ys-footer-grid a svg {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 8px !important;
+  }
+}
+
+/* Footer bottom bar links — increase tap targets */
+@media (max-width: 540px) {
+  footer a[style*="inline-flex"] {
+    min-height: 44px !important;
+    padding: 8px 0 !important;
+  }
+}
+
+/* Map popup close button sizing */
+.ys-map-popup a.leaflet-popup-close-button {
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 20px !important;
+}
+
+/* Map popup wrapper max-width on very small screens */
+@media (max-width: 360px) {
+  .ys-map-popup .leaflet-popup-content-wrapper {
+    max-width: 200px !important;
+  }
+}
+
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Image responsiveness safety */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Property inquiry popup card sizing on mobile */
+@media (max-width: 540px) {
+  .ys-popup-card {
+    max-width: 100% !important;
+    margin: 0 12px !important;
+    border-radius: 12px !important;
+  }
+  .ys-popup-overlay {
+    padding: 12px !important;
+  }
+}
+
+/* Availability filter buttons — increase tap targets */
+@media (max-width: 540px) {
+  .ys-avail-grid + div button,
+  [class*="ys-avail"] button {
+    min-height: 44px !important;
+    padding: 10px 16px !important;
+  }
+}
+
+/* Floorplan detail panel inner grid on mobile */
+@media (max-width: 540px) {
+  .ys-floor-detail [style*="gridTemplateColumns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Hero title clamp safety on small screens */
+@media (max-width: 360px) {
+  h1[style*="clamp(40px"] {
+    font-size: 32px !important;
+  }
+  h2[style*="clamp(32px"] {
+    font-size: 26px !important;
+  }
+}
+
+/* Mobile card horizontal scroll affordance hint */
+.ys-mobile-cards {
+  scrollbar-width: thin !important;
+}
+.ys-mobile-cards::-webkit-scrollbar {
+  display: block !important;
+  height: 4px !important;
+}
+.ys-mobile-cards::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.ys-mobile-cards::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15) !important;
+  border-radius: 4px !important;
+}
+
+/* FAQ accordion max-height fix — allow content to expand */
+@media (max-width: 540px) {
+  .ys-faq-grid [style*="maxHeight: 180"] {
+    max-height: 400px !important;
+  }
+}
+
+/* Booking/apply form stepper scroll safety */
+@media (max-width: 540px) {
+  .ys-apply-stepper {
+    padding-bottom: 8px !important;
+  }
+}
+
+/* Property detail CTA buttons tap targets */
+@media (max-width: 540px) {
+  a[style*="padding: 14px 24px"],
+  button[style*="padding: 14px 24px"],
+  a[style*="padding: 14px 26px"],
+  button[style*="padding: 14px 26px"] {
+    min-height: 48px !important;
+  }
+}
+
+/* Ensure all buttons have minimum tap height */
+@media (max-width: 540px) {
+  button, [role="button"] {
+    min-height: 44px !important;
+  }
+}
+
+/* Apply page — collapse fixed sidebar on mobile */
+@media (max-width: 960px) {
+  .ys-apply-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Property detail price/units grid */
+@media (max-width: 540px) {
+  .ys-detail-grid [style*="gridTemplateColumns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Lightbox close button tap target */
+@media (max-width: 540px) {
+  .ys-lightbox-close,
+  button[aria-label="Close"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* Gallery card padding reduction */
+@media (max-width: 540px) {
+  .ys-gallery-grid > div {
+    padding: 16px !important;
+  }
+}
+
+/* Sell form card padding reduction */
+@media (max-width: 540px) {
+  .ys-sell-grid > div {
+    padding: 20px !important;
+  }
+}
+
+/* Property detail meta grids */
+@media (max-width: 540px) {
+  .ys-detail-meta {
+    grid-template-columns: 1fr !important;
+  }
+  .ys-floor-meta {
+    grid-template-columns: 1fr !important;
+  }
+}

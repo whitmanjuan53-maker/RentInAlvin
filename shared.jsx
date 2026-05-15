@@ -462,7 +462,7 @@ function PropertyCard({ prop, p, idx, displayFont, onSelect }) {
           {prop.note}
         </p>
         <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "baseline",
+          display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap",
           paddingTop: 14, borderTop: `1px solid ${p.line}`,
           gap: 12
         }}>
@@ -787,7 +787,7 @@ function Contact({ p, displayFont, simplified }) {
                 410 S 2nd Street<br />Alvin, TX 77511
               </div>
               <div style={{
-                marginTop: 16, display: "flex", gap: 24,
+                marginTop: 16, display: "flex", gap: 24, flexWrap: "wrap",
                 fontSize: 13, color: p.inkSoft
               }}>
                 <div><div style={{ fontWeight: 600, color: p.ink }}>Mon – Fri</div>9:00am – 5:00pm</div>
@@ -832,7 +832,7 @@ function Contact({ p, displayFont, simplified }) {
                   transition: "all 220ms ease"
                 }}></div>
                 <div style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "baseline",
+                  display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap",
                   fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase",
                   color: p.inkSoft, fontWeight: 500, marginBottom: 8
                 }}>
@@ -945,7 +945,7 @@ function Footer({ p, displayFont }) {
     display: "flex", alignItems: "center", fontSize: 14, color: "inherit",
     textDecoration: "none", padding: "8px 0",
     transition: "color 200ms ease, transform 200ms ease",
-    minHeight: 36
+    minHeight: 44
   };
   const headingStyle = {
     color: p.paper, fontWeight: 600, fontSize: 13,

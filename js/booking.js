@@ -232,7 +232,7 @@ function TourBooking({
       border: "none",
       cursor: "pointer",
       color: p.ink,
-      padding: 8,
+      padding: 12,
       fontSize: 18,
       lineHeight: 1,
       borderRadius: 10,
@@ -609,7 +609,7 @@ function TourBooking({
       fontSize: 14,
       color: p.inkSoft,
       fontFamily: "inherit",
-      padding: "12px 0",
+      padding: "12px 16px",
       transition: "color 200ms ease"
     },
     onMouseOver: e => e.currentTarget.style.color = p.ink,

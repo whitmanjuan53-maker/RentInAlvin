@@ -307,6 +307,7 @@ function PropertyDetailPage() {
       color: p.ink
     }
   }, h)))), /*#__PURE__*/React.createElement("div", {
+    className: "ys-detail-meta",
     style: {
       padding: "20px 0",
       borderTop: `1px solid ${p.line}`,
@@ -496,6 +497,7 @@ function PropertyDetailPage() {
         color: p.ink
       }
     }, f.type), /*#__PURE__*/React.createElement("div", {
+      className: "ys-floor-meta",
       style: {
         display: "grid",
         gridTemplateColumns: "1fr 1fr",

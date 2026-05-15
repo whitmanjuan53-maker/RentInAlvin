@@ -193,7 +193,7 @@ function TourBooking({ open, onClose, p, displayFont, initialPropertyId, inline 
           {!inline && (
             <button onClick={onClose} aria-label="Close" style={{
               background: "transparent", border: "none", cursor: "pointer",
-              color: p.ink, padding: 8, fontSize: 18, lineHeight: 1,
+              color: p.ink, padding: 12, fontSize: 18, lineHeight: 1,
               borderRadius: 10,
               transition: "background 200ms ease",
               flexShrink: 0
@@ -444,7 +444,7 @@ function TourBooking({ open, onClose, p, displayFont, initialPropertyId, inline 
             <button onClick={() => step > 1 ? setStep(step - 1) : inline ? (setStep(1), setSubmitted(false), setStatus("idle"), setPropId(""), setDate(null), setTime(""), setName(""), setPhone(""), setEmail(""), setMoveBy(""), setNotes("")) : onClose()} style={{
               background: "transparent", border: "none", cursor: "pointer",
               fontSize: 14, color: p.inkSoft, fontFamily: "inherit",
-              padding: "12px 0",
+              padding: "12px 16px",
               transition: "color 200ms ease"
             }}
             onMouseOver={(e) => e.currentTarget.style.color = p.ink}

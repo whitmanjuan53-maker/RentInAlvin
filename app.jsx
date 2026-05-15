@@ -382,7 +382,8 @@ function YLogo({ p }) {
 
 function Hero({ p, displayFont, showStats }) {
   return (
-    <section id="top" style={{
+    <>
+    <section id="top" className="ys-hero" style={{
       position: "relative",
       padding: "100px var(--pad-x) 24px",
       minHeight: "calc(100vh - 260px)",
@@ -507,6 +508,8 @@ function Hero({ p, displayFont, showStats }) {
         </div>
       </section>
     )}
+    </>
+)
 
 }
 
@@ -593,7 +596,7 @@ function PropertyCard({ prop, p, idx }) {
           {prop.note}
         </p>
         <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "baseline",
+          display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap",
           paddingTop: 14, borderTop: `1px solid ${p.line}`,
           gap: 12
         }}>
@@ -1019,7 +1022,7 @@ function Contact({ p, displayFont }) {
                 transition: "all 220ms ease"
               }}></div>
                 <div style={{
-                display: "flex", justifyContent: "space-between", alignItems: "baseline",
+                display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap",
                 fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
                 color: p.inkSoft, fontWeight: 500, marginBottom: 10
               }}>
