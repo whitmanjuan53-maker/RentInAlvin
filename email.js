@@ -85,7 +85,7 @@ function formatLeadEmail(lead) {
     lead.email ? `Email: ${lead.email}` : null,
     lead.preferred_date ? `Preferred Date: ${lead.preferred_date}` : null,
     lead.preferred_time ? `Preferred Time: ${lead.preferred_time}` : null,
-    lead.moveIn ? `Move-in Date: ${lead.moveIn}` : null,
+    lead.raw_data && lead.raw_data.moveIn ? `Move-in Date: ${lead.raw_data.moveIn}` : null,
     lead.message ? `Message: ${lead.message}` : null,
     lead.submission_page ? `Submitted From: ${lead.submission_page}` : null,
     `Submitted At: ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}`,
@@ -143,7 +143,7 @@ async function sendLeadEmail(lead) {
 
   // If email is not configured, log and return
   const isConfigured = EMAIL_PROVIDER === 'smtp'
-    ? !!(process.env.SMTP_HOST && process.env.SMTP_USER)
+    ? !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS)
     : EMAIL_PROVIDER === 'resend'
     ? !!process.env.RESEND_API_KEY
     : EMAIL_PROVIDER === 'sendgrid'

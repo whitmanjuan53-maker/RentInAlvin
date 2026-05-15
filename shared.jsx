@@ -163,7 +163,7 @@ const PROPERTIES = [
     id: "white-house",
     name: "The White House Apartments",
     addr: "1606 W Sealy St",
-    fullAddr: "1606 Sealy St, Alvin, TX 77511",
+    fullAddr: "1606 W Sealy St, Alvin, TX 77511",
     lat: 29.4260,
     lng: -95.2550,
     tag: "Apartments",
@@ -1028,7 +1028,8 @@ function Footer({ p, displayFont }) {
               { name: "Kings Haven", id: "kings-haven" },
               { name: "Kings Manor", id: "kings-manor" },
               { name: "French Quarter", id: "french-quarter" },
-              { name: "White House", id: "white-house" }
+              { name: "White House", id: "white-house" },
+              { name: "Kings Haven (100)", id: "kings-haven-100" }
             ].map((prop) => (
               <a key={prop.id} href={`property-detail.html?property=${prop.id}`} style={footerLink}
                 onMouseOver={(e) => { e.currentTarget.style.color = p.accent; e.currentTarget.style.transform = "translateX(3px)"; }}

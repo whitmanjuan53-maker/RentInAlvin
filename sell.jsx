@@ -177,7 +177,7 @@ function SellProperty({ p, displayFont }) {
                 Contact Management
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </a>
-              <a href="#contact" style={{
+              <a href="#sell" style={{
                 padding: "14px 26px", background: p.paper, color: p.ink,
                 textDecoration: "none", fontSize: 15, fontWeight: 600,
                 borderRadius: 10, border: `1px solid ${p.line}`,

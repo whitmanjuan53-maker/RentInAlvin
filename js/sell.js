@@ -266,7 +266,7 @@ function SellProperty({
     strokeWidth: "1.5",
     strokeLinecap: "round"
   }))), /*#__PURE__*/React.createElement("a", {
-    href: "#contact",
+    href: "#sell",
     style: {
       padding: "14px 26px",
       background: p.paper,

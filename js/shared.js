@@ -134,7 +134,7 @@ const PROPERTIES = [{
   id: "white-house",
   name: "The White House Apartments",
   addr: "1606 W Sealy St",
-  fullAddr: "1606 Sealy St, Alvin, TX 77511",
+  fullAddr: "1606 W Sealy St, Alvin, TX 77511",
   lat: 29.4260,
   lng: -95.2550,
   tag: "Apartments",
@@ -1589,6 +1589,9 @@ function Footer({
   }, {
     name: "White House",
     id: "white-house"
+  }, {
+    name: "Kings Haven (100)",
+    id: "kings-haven-100"
   }].map(prop => /*#__PURE__*/React.createElement("a", {
     key: prop.id,
     href: `property-detail.html?property=${prop.id}`,

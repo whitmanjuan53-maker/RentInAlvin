@@ -10,11 +10,13 @@ const { saveLead, getLeads, getLeadStats, getLeadById, updateLeadStatus } = requ
 const { sendLeadEmail, verifyConnection } = require('./email');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SITE_URL = process.env.SITE_URL || `http://localhost:${PORT}`;
 const HONEYPOT_FIELD = process.env.HONEYPOT_FIELD || 'website';
 const RATE_LIMIT_PER_HOUR = parseInt(process.env.RATE_LIMIT_PER_HOUR || '10', 10);
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
 
 // Security middleware
 // @ts-ignore
@@ -35,16 +37,36 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: NODE_ENV === 'development' ? true : SITE_URL,
+  origin: NODE_ENV === 'development' ? true : (process.env.SITE_URL || true),
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
 
-// Rate limiting
+// Block sensitive paths before static serving
+const BLOCKED_PATHS = [
+  /^\/data\//,
+  /^\/server\.js/,
+  /^\/db\.js/,
+  /^\/email\.js/,
+  /^\/build\.js/,
+  /^\/package\.json/,
+  /^\/package-lock\.json/,
+  /^\/\.env/,
+  /^\/\.git/,
+];
+app.use((req, res, next) => {
+  if (BLOCKED_PATHS.some(pattern => pattern.test(req.path))) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  next();
+});
+
+// Rate limiting (skip static assets)
 // @ts-ignore
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 50,
+  skip: (req) => !!req.path.match(/\.(js|css|jpg|jpeg|png|gif|svg|ico|html|woff2?)$/),
   message: { error: 'Too many requests, please try again later.' }
 });
 app.use(limiter);
@@ -85,6 +107,9 @@ function isValidPhone(phone) {
 
 function checkHoneypot(body) {
   const field = HONEYPOT_FIELD;
+  if (!(field in body)) {
+    return { isSpam: true, reason: 'Honeypot missing' };
+  }
   if (body[field] && String(body[field]).trim()) {
     return { isSpam: true, reason: 'Honeypot triggered' };
   }
@@ -114,8 +139,20 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Lead stats (for future admin dashboard)
-app.get('/api/leads/stats', (req, res) => {
+// Admin auth middleware
+function requireAdmin(req, res, next) {
+  const key = req.headers['x-admin-key'] || req.query.key;
+  if (!ADMIN_API_KEY) {
+    return res.status(503).json({ error: 'Admin access not configured' });
+  }
+  if (key !== ADMIN_API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+// Lead stats (admin only)
+app.get('/api/leads/stats', requireAdmin, (req, res) => {
   try {
     const stats = getLeadStats();
     res.json(stats);
@@ -125,8 +162,8 @@ app.get('/api/leads/stats', (req, res) => {
   }
 });
 
-// Get leads (for future dashboard)
-app.get('/api/leads', (req, res) => {
+// Get leads (admin only)
+app.get('/api/leads', requireAdmin, (req, res) => {
   try {
     const filters = {
       status: req.query.status,
@@ -143,8 +180,8 @@ app.get('/api/leads', (req, res) => {
   }
 });
 
-// Get single lead
-app.get('/api/leads/:id', (req, res) => {
+// Get single lead (admin only)
+app.get('/api/leads/:id', requireAdmin, (req, res) => {
   try {
     const lead = getLeadById(parseInt(req.params.id, 10));
     if (!lead) {
@@ -157,8 +194,8 @@ app.get('/api/leads/:id', (req, res) => {
   }
 });
 
-// Update lead status
-app.put('/api/leads/:id/status', (req, res) => {
+// Update lead status (admin only)
+app.put('/api/leads/:id/status', requireAdmin, (req, res) => {
   try {
     const { status, assigned_to } = req.body;
     const validStatuses = ['New', 'Contacted', 'Tour Scheduled', 'Applied', 'Closed', 'Cancelled'];
@@ -352,8 +389,11 @@ app.use(express.static(path.join(__dirname), {
   }
 }));
 
-// Fallback to index.html for unmatched routes
+// Fallback to index.html for unmatched routes (return JSON for API 404s)
 app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Not found' });
+  }
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 

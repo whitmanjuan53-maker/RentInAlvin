@@ -107,7 +107,7 @@ function AboutPage() {
       flexDirection: "column",
       gap: 16
     }
-  }, [["150+", "units managed"], ["6", "properties in Alvin"], ["$890", "starting monthly rent"], ["48 hrs", "average application decision"], ["Local", "family-run team"]].map(([n, label], i) => /*#__PURE__*/React.createElement("div", {
+  }, [["150+", "units managed"], ["5", "properties in Alvin"], ["$890", "starting monthly rent"], ["48 hrs", "average application decision"], ["Local", "family-run team"]].map(([n, label], i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: {
       display: "flex",
