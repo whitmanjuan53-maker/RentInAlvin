@@ -413,6 +413,20 @@ app.use(express.static(path.join(STATIC_ROOT), {
   }
 }));
 
+// Debug endpoint to inspect filesystem
+app.get('/__debug/fs', (req, res) => {
+  const dirs = [__dirname, process.cwd(), path.join(__dirname, '..'), '/var/task', '/tmp'];
+  const result = {};
+  for (const dir of dirs) {
+    try {
+      result[dir] = fs.readdirSync(dir).slice(0, 20);
+    } catch (e) {
+      result[dir] = e.message;
+    }
+  }
+  res.json({ STATIC_ROOT, __dirname, cwd: process.cwd(), dirs: result });
+});
+
 // Fallback to index.html for unmatched routes (return JSON for API 404s)
 app.use((req, res) => {
   if (req.path.startsWith('/api/')) {
