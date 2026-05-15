@@ -18,6 +18,59 @@ button, a, [role="button"] {
   touch-action: manipulation;
 }
 
+/* Prevent fixed header from covering anchor-jump targets */
+html {
+  scroll-padding-top: 80px;
+}
+@media (max-width: 540px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+}
+
+/* Touch-friendly active-state feedback */
+a:active, button:active, [role="button"]:active {
+  opacity: 0.75;
+  transform: scale(0.98);
+}
+a, button, [role="button"] {
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+/* Hamburger button — minimum 48×48 tap target */
+.ys-nav-burger {
+  min-width: 48px !important;
+  min-height: 48px !important;
+}
+
+/* Mobile menu links — generous tap targets */
+.ys-nav-mobile a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Property card action links — bigger tap targets */
+.ys-prop-grid a,
+[class*="ys-prop"] a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* All buttons minimum 48px on mobile for easy tapping */
+@media (max-width: 540px) {
+  button, [role="button"], input[type="submit"], input[type="button"] {
+    min-height: 48px !important;
+  }
+}
+
+/* Popup close button — easy to hit */
+.ys-popup-close {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
 /* Mobile nav menu scroll safety */
 .ys-nav-mobile {
   max-height: 80vh;

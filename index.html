@@ -264,8 +264,6 @@
   </div>
   <script>
     (function() {
-      var shown = sessionStorage.getItem('ysLookLeaseShown');
-      if (shown) return;
       function openPopup() {
         var popup = document.getElementById('ysLookLeasePopup');
         if (!popup) return;
@@ -282,8 +280,15 @@
         setTimeout(function() { popup.style.display = 'none'; }, 350);
         sessionStorage.setItem('ysLookLeaseShown', '1');
       }
+      // Always define close function so onclick works
       window.closeYsPopup = closePopup;
-      setTimeout(openPopup, 3000);
+
+      // Only auto-show if not previously dismissed
+      var shown = sessionStorage.getItem('ysLookLeaseShown');
+      if (!shown) {
+        setTimeout(openPopup, 3000);
+      }
+
       var popup = document.getElementById('ysLookLeasePopup');
       if (popup) {
         popup.addEventListener('click', function(e) { if (e.target === popup) closePopup(); });
