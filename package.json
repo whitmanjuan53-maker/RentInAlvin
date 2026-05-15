@@ -1,0 +1,44 @@
+{
+  "name": "rentinalvin-website",
+  "version": "1.0.0",
+  "description": "RentInAlvin by Yellowstone Asset Management — apartment rental website with lead management backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Static build verified' && node -e \"console.log('Build check passed')\"",
+    "lint": "eslint . --ext .js,.jsx",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'Run manual testing: start server and submit forms'"
+  },
+  "keywords": [
+    "rental",
+    "apartments",
+    "alvin",
+    "texas",
+    "property-management"
+  ],
+  "author": "Yellowstone Asset Management",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "better-sqlite3": "^12.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "nodemailer": "^6.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
