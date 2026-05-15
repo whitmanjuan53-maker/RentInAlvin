@@ -315,7 +315,7 @@ function Nav({
       fontWeight: 500,
       letterSpacing: "0.01em",
       position: "relative",
-      padding: "4px 0",
+      padding: "8px 4px",
       transition: "color 200ms ease"
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
@@ -347,13 +347,14 @@ function Nav({
     className: "ys-nav-burger",
     onClick: () => setMenuOpen(o => !o),
     "aria-label": "Menu",
+    "aria-expanded": menuOpen,
     style: {
       display: "none",
       background: "transparent",
       border: `1px solid ${p.line}`,
       borderRadius: 8,
-      width: 42,
-      height: 42,
+      width: 48,
+      height: 48,
       padding: 0,
       cursor: "pointer",
       alignItems: "center",
@@ -864,14 +865,16 @@ function PropertyCard({
   }, /*#__PURE__*/React.createElement("a", {
     href: `property-detail.html?property=${prop.id}`,
     style: {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 600,
       color: p.primary,
       textDecoration: "none",
       display: "inline-flex",
       alignItems: "center",
       gap: 6,
-      transition: "color 200ms ease"
+      transition: "color 200ms ease",
+      padding: "6px 4px",
+      minHeight: 44
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
     onMouseOut: e => e.currentTarget.style.color = p.primary
@@ -883,14 +886,16 @@ function PropertyCard({
   }, "|"), /*#__PURE__*/React.createElement("a", {
     href: `book-tour.html?property=${prop.id}`,
     style: {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 600,
       color: p.ink,
       textDecoration: "none",
       display: "inline-flex",
       alignItems: "center",
       gap: 6,
-      transition: "color 200ms ease"
+      transition: "color 200ms ease",
+      padding: "6px 4px",
+      minHeight: 44
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
     onMouseOut: e => e.currentTarget.style.color = p.ink
@@ -916,14 +921,16 @@ function PropertyCard({
       window.__openInquiry && window.__openInquiry(prop.name);
     },
     style: {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 600,
       color: p.primary,
       textDecoration: "none",
       display: "inline-flex",
       alignItems: "center",
       gap: 6,
-      transition: "color 200ms ease"
+      transition: "color 200ms ease",
+      padding: "6px 4px",
+      minHeight: 44
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
     onMouseOut: e => e.currentTarget.style.color = p.primary

@@ -136,16 +136,17 @@ function Availability({
     key: k,
     onClick: () => setFilter(k),
     style: {
-      padding: "8px 16px",
+      padding: "10px 18px",
       background: filter === k ? p.ink : "transparent",
       color: filter === k ? p.paper : p.ink,
       border: `1px solid ${filter === k ? p.ink : p.line}`,
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 500,
       cursor: "pointer",
       fontFamily: "inherit",
       borderRadius: 10,
-      transition: "all 200ms ease"
+      transition: "all 200ms ease",
+      minHeight: 44
     }
   }, label)))), /*#__PURE__*/React.createElement("div", {
     className: "ys-avail-grid",
@@ -473,7 +474,7 @@ function AlvinMap({
               <div style="font-size:12px;color:#5A5A5A;margin-top:4px;">${m.fullAddr}${isOffice ? " · Leasing office" : ""}</div>
               <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
                 <a href="${directionsUrl}" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">Get directions</a>
-                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;">View property</a>
+                <a href="property-detail.html?property=${m.slug}" style="flex:1;min-width:90px;text-align:center;padding:12px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;min-height:44px;display:flex;align-items:center;justify-content:center;">View property</a>
               </div>
             </div>
           `;
