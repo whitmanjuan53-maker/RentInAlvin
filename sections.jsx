@@ -291,11 +291,15 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
         mapInstanceRef.current = map;
         markersRef.current = markers;
         setMapLoaded(true);
+        // Ensure Leaflet recalculates container dimensions after layout settles
+        requestAnimationFrame(() => {
+          map.invalidateSize();
+        });
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
       }
-    }, 80);
+    }, 200);
 
     return () => {
       clearTimeout(timer);
@@ -517,6 +521,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
             ref={mapContainerRef}
             style={{
               position: "relative",
+              width: "100%",
               height: isMobile ? 380 : "clamp(420px, 55vh, 580px)",
               background: p.paper,
               border: `1px solid ${p.line}`,
@@ -529,7 +534,7 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
               <Fallback />
             ) : (
               <>
-                <div ref={mapRef} style={{ position: "absolute", inset: 0, zIndex: 1 }} />
+                <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
                 {!mapLoaded && (
                   <div style={{
                     position: "absolute", inset: 0, zIndex: 2,

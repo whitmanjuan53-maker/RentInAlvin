@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateW
@@ -1170,3 +1172,4 @@ function App() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(App, null));
+})();

@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 const {
   useState: useStateS,
   useEffect: useEffectS,
@@ -460,11 +462,15 @@ function AlvinMap({
         mapInstanceRef.current = map;
         markersRef.current = markers;
         setMapLoaded(true);
+        // Ensure Leaflet recalculates container dimensions after layout settles
+        requestAnimationFrame(() => {
+          map.invalidateSize();
+        });
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
       }
-    }, 80);
+    }, 200);
     return () => {
       clearTimeout(timer);
       if (mapInstanceRef.current) {
@@ -804,6 +810,7 @@ function AlvinMap({
     ref: mapContainerRef,
     style: {
       position: "relative",
+      width: "100%",
       height: isMobile ? 380 : "clamp(420px, 55vh, 580px)",
       background: p.paper,
       border: `1px solid ${p.line}`,
@@ -814,9 +821,8 @@ function AlvinMap({
   }, mapError ? /*#__PURE__*/React.createElement(Fallback, null) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     ref: mapRef,
     style: {
-      position: "absolute",
-      inset: 0,
-      zIndex: 1
+      width: "100%",
+      height: "100%"
     }
   }), !mapLoaded && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1004,3 +1010,4 @@ function FAQ({
 window.Availability = Availability;
 window.AlvinMap = AlvinMap;
 window.FAQ = FAQ;
+})();

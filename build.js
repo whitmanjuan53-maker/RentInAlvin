@@ -22,7 +22,10 @@ for (const file of jsxFiles) {
       presets: ['@babel/preset-react'],
     });
     const outName = file.replace('.jsx', '.js');
-    fs.writeFileSync(path.join(JS_DIR, outName), result.code);
+    // Wrap compiled output in IIFE to prevent global-scope const redeclaration
+    // errors when multiple scripts load on the same page.
+    const wrapped = `(function(){\n'use strict';\n${result.code}\n})();`;
+    fs.writeFileSync(path.join(JS_DIR, outName), wrapped);
     console.log(`Compiled: ${file} -> js/${outName}`);
   } catch (err) {
     console.error(`Skipped:  ${file} (syntax error: ${err.message.split('\n')[0]})`);

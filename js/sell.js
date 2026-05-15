@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateP
@@ -608,3 +610,4 @@ function SellProperty({
   }, "We'll review and reach out within one business day. No spam, no listing pressure."))))));
 }
 window.SellProperty = SellProperty;
+})();

@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React, ReactDOM */
 const {
   useEffect
@@ -54,3 +56,4 @@ function SellPage() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(SellPage, null));
+})();

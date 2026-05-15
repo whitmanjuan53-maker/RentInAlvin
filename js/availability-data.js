@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateD,
@@ -107,3 +109,4 @@ Object.assign(window, {
   useAvailability,
   FALLBACK_AVAILABILITY
 });
+})();

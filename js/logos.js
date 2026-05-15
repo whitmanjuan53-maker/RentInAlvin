@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateL
@@ -995,3 +997,4 @@ function LogoApp() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(LogoApp, null));
+})();

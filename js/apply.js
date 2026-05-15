@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateA
@@ -929,3 +931,4 @@ function Apply({
   }, status === "sending" ? "Submitting..." : "Submit application"))))));
 }
 window.Apply = Apply;
+})();

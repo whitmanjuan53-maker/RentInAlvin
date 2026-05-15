@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React, ReactDOM */
 const {
   useState,
@@ -545,3 +547,4 @@ function PropertyDetailPage() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(PropertyDetailPage, null));
+})();

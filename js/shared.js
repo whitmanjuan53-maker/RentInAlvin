@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React, ReactDOM */
 const {
   useState,
@@ -1759,3 +1761,4 @@ window.Shared = {
   InstagramFeed,
   Footer
 };
+})();

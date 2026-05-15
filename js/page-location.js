@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React, ReactDOM */
 const {
   useEffect
@@ -238,3 +240,4 @@ function LocationPage() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(LocationPage, null));
+})();

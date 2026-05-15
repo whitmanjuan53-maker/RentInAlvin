@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 // DesignCanvas.jsx — Figma-ish design canvas wrapper
 // Warm gray grid bg + Sections + Artboards + PostIt notes.
 // Artboards are reorderable (grip-drag), labels/titles are inline-editable,
@@ -1031,3 +1033,4 @@ Object.assign(window, {
   DCArtboard,
   DCPostIt
 });
+})();

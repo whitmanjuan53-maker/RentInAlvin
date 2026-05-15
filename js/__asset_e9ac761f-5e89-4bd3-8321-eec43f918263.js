@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 // tweaks-panel.jsx
 // Reusable Tweaks shell + form-control helpers.
 //
@@ -521,3 +523,4 @@ Object.assign(window, {
   TweakColor,
   TweakButton
 });
+})();

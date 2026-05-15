@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 /* global React */
 const {
   useState: useStateB,
@@ -729,3 +731,4 @@ Object.assign(window, {
   TourBooking,
   useTourBooking
 });
+})();
