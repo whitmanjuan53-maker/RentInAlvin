@@ -179,7 +179,7 @@ const PROPERTIES = [
       "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop&q=80",
       "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&h=600&fit=crop&q=80"
     ],
-    description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from RentInAlvin.",
+    description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from Yellowstone Asset Management.",
     amenities: ["On-site laundry", "Central A/C", "Off-street parking", "Pet friendly", "High-speed internet ready", "Near parks"],
     highlights: ["Classic architecture", "Quiet residential street", "Near parks"]
   }
@@ -258,10 +258,7 @@ function Nav({ p, currentPage }) {
       <a href="index.html" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: p.ink }}>
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
           <span style={{ fontFamily: "'Lora', serif", fontSize: 22, letterSpacing: "-0.01em", fontWeight: 500 }}>
-            RentInAlvin.com
-          </span>
-          <span style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: p.inkSoft, fontWeight: 500 }}>
-            Managed by Yellowstone Asset Management
+            Yellowstone Asset Management
           </span>
         </div>
       </a>
@@ -982,18 +979,7 @@ function Footer({ p, displayFont }) {
               fontSize: "clamp(26px, 2.8vw, 36px)",
               color: p.paper, lineHeight: 1, letterSpacing: "-0.01em"
             }}>
-              RentInAlvin.com
-            </div>
-            <div style={{
-              width: 40, height: 2, background: p.accent,
-              marginTop: 14, borderRadius: 1
-            }} />
-            <div style={{
-              fontSize: 12, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: p.accent,
-              fontWeight: 600, marginTop: 14
-            }}>
-              Managed by Yellowstone Asset Management
+              Yellowstone Asset Management
             </div>
             <p style={{
               fontSize: 15, lineHeight: 1.65, marginTop: 16,
@@ -1090,7 +1076,7 @@ function Footer({ p, displayFont }) {
           color: `color-mix(in oklab, ${p.paper} 45%, transparent)`,
           flexWrap: "wrap", gap: 12
         }}>
-          <span>© {new Date().getFullYear()} RentInAlvin · Yellowstone Asset Management. Equal Housing Opportunity.</span>
+          <span>© {new Date().getFullYear()} Yellowstone Asset Management. Equal Housing Opportunity.</span>
           <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
             <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, transition: "color 200ms ease" }}
               onMouseOver={(e) => e.currentTarget.style.color = p.accent}

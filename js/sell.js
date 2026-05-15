@@ -7,7 +7,7 @@ const {
 
 /* ============================================================
    Sell-your-property section — "For Property Owners"
-   Connects to real backend via RentInAlvinAPI
+   Connects to real backend via Yellowstone Asset Management API
 ============================================================ */
 
 function SellProperty({

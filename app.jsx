@@ -1,8 +1,7 @@
 const { useState, useEffect, useRef } = React;
 
 /* ============================================================
-   RentInAlvin — Landing Page
-   Managed by Yellowstone Asset Management
+   Yellowstone Asset Management — Landing Page
    Aesthetic: warm, minimal, professional. Lora + Source Sans 3.
    Cream / deep navy / warm bronze accents.
 ============================================================ */
@@ -179,7 +178,7 @@ const PROPERTIES = [
     "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop&q=80",
     "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&h=600&fit=crop&q=80"
   ],
-  description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from RentInAlvin.",
+  description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from Yellowstone Asset Management.",
   amenities: ["On-site laundry", "Central A/C", "Off-street parking", "Pet friendly", "High-speed internet ready", "Near parks"],
   highlights: ["Classic architecture", "Quiet residential street", "Near parks"]
 }];
@@ -277,9 +276,6 @@ function Nav({ p }) {
         <RiALogo p={p} />
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
           <span style={{ fontFamily: "'Lora', serif", fontSize: 22, letterSpacing: "-0.01em", fontWeight: 400 }}>
-            RentInAlvin
-          </span>
-          <span style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: p.inkSoft, fontWeight: 500, marginTop: 2 }}>
             Yellowstone Asset Management
           </span>
         </div>
@@ -405,15 +401,6 @@ function Hero({ p, displayFont, showStats }) {
       }} />
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", width: "100%" }}>
-        <div style={{
-          display: "flex", alignItems: "center", gap: 14,
-          fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase",
-          color: p.inkSoft, marginBottom: 32, fontWeight: 500
-        }}>
-          <span style={{ width: 32, height: 2, background: p.accent, borderRadius: 1 }}></span>
-          Managed by Yellowstone Asset Management
-        </div>
-
         <h1 style={{
           fontFamily: `'${displayFont}', serif`,
           fontSize: "clamp(52px, 7vw, 108px)",
@@ -439,7 +426,7 @@ function Hero({ p, displayFont, showStats }) {
             fontSize: 18, lineHeight: 1.65, color: p.inkSoft,
             maxWidth: "48ch", margin: 0
           }}>
-            RentInAlvin cares for over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
+            Yellowstone Asset Management cares for over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a href="#" onClick={(e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }} style={{
@@ -851,7 +838,7 @@ function About({ p, displayFont }) {
         <SectionHead
           p={p}
           displayFont={displayFont}
-          eyebrow="Why RentInAlvin"
+          eyebrow="Why Yellowstone Asset Management"
           title="Built around the way Alvin actually lives."
           lead="Every property we manage is within ten minutes of our office. That proximity is the whole point." />
         
@@ -1638,18 +1625,7 @@ function Footer({ p, displayFont }) {
               fontSize: "clamp(30px, 3.2vw, 40px)",
               color: p.paper, lineHeight: 1, letterSpacing: "-0.01em"
             }}>
-              RentInAlvin
-            </div>
-            <div style={{
-              width: 40, height: 2, background: p.accent,
-              marginTop: 14, borderRadius: 1
-            }} />
-            <div style={{
-              fontSize: 12, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: p.accent,
-              fontWeight: 600, marginTop: 14
-            }}>
-              Managed by Yellowstone Asset Management
+              Yellowstone Asset Management
             </div>
             <p style={{
               fontSize: 15, lineHeight: 1.65, marginTop: 16,
@@ -1746,7 +1722,7 @@ function Footer({ p, displayFont }) {
           color: `color-mix(in oklab, ${p.paper} 45%, transparent)`,
           flexWrap: "wrap", gap: 12
         }}>
-          <span>© {new Date().getFullYear()} RentInAlvin · Yellowstone Asset Management. Equal Housing Opportunity.</span>
+          <span>© {new Date().getFullYear()} Yellowstone Asset Management. Equal Housing Opportunity.</span>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, transition: "color 200ms ease" }}
               onMouseOver={(e) => e.currentTarget.style.color = p.accent}

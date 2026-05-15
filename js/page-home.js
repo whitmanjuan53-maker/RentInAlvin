@@ -84,25 +84,7 @@ function HomePage() {
       flexDirection: "column",
       justifyContent: "center"
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      fontSize: 12,
-      letterSpacing: "0.1em",
-      textTransform: "uppercase",
-      color: p.inkSoft,
-      marginBottom: 24,
-      fontWeight: 500
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      width: 20,
-      height: 1,
-      background: p.inkSoft
-    }
-  }), "Apartments & townhomes in Alvin, Texas"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("h1", {
     style: {
       fontFamily: `'${displayFont}', serif`,
       fontSize: "clamp(56px, 8vw, 120px)",
@@ -125,7 +107,7 @@ function HomePage() {
       maxWidth: "52ch",
       margin: "24px 0 0"
     }
-  }, "RentInAlvin manages over ", /*#__PURE__*/React.createElement("strong", {
+  }, "Yellowstone Asset Management manages over ", /*#__PURE__*/React.createElement("strong", {
     style: {
       color: p.ink
     }
@@ -395,7 +377,7 @@ function HomePage() {
     p: p,
     displayFont: displayFont,
     marginBottom: 32,
-    eyebrow: "Why RentInAlvin",
+    eyebrow: "Why Yellowstone Asset Management",
     title: "Built around the way Alvin actually lives."
   }), /*#__PURE__*/React.createElement("p", {
     style: {

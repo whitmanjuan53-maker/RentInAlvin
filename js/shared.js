@@ -146,7 +146,7 @@ const PROPERTIES = [{
   img: "White House exterior",
   heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop&q=80",
   gallery: ["https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&h=600&fit=crop&q=80", "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&q=80", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&h=600&fit=crop&q=80", "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop&q=80", "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&h=600&fit=crop&q=80"],
-  description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from RentInAlvin.",
+  description: "Classic white-clad architecture gives this community its name and its charm. The White House Apartments sit on a quiet residential street near local parks, offering a peaceful setting with the same responsive management you expect from Yellowstone Asset Management.",
   amenities: ["On-site laundry", "Central A/C", "Off-street parking", "Pet friendly", "High-speed internet ready", "Near parks"],
   highlights: ["Classic architecture", "Quiet residential street", "Near parks"]
 }];
@@ -307,15 +307,7 @@ function Nav({
       letterSpacing: "-0.01em",
       fontWeight: 500
     }
-  }, "RentInAlvin.com"), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 9,
-      letterSpacing: "0.12em",
-      textTransform: "uppercase",
-      color: p.inkSoft,
-      fontWeight: 500
-    }
-  }, "Managed by Yellowstone Asset Management"))), /*#__PURE__*/React.createElement("nav", {
+  }, "Yellowstone Asset Management"))), /*#__PURE__*/React.createElement("nav", {
     className: "ys-nav-links",
     style: {
       display: "flex",
@@ -1505,24 +1497,7 @@ function Footer({
       lineHeight: 1,
       letterSpacing: "-0.01em"
     }
-  }, "RentInAlvin.com"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 40,
-      height: 2,
-      background: p.accent,
-      marginTop: 14,
-      borderRadius: 1
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      letterSpacing: "0.12em",
-      textTransform: "uppercase",
-      color: p.accent,
-      fontWeight: 600,
-      marginTop: 14
-    }
-  }, "Managed by Yellowstone Asset Management"), /*#__PURE__*/React.createElement("p", {
+  }, "Yellowstone Asset Management"), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 15,
       lineHeight: 1.65,
@@ -1678,7 +1653,7 @@ function Footer({
       flexWrap: "wrap",
       gap: 12
     }
-  }, /*#__PURE__*/React.createElement("span", null, "\xA9 ", new Date().getFullYear(), " RentInAlvin \xB7 Yellowstone Asset Management. Equal Housing Opportunity."), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "\xA9 ", new Date().getFullYear(), " Yellowstone Asset Management. Equal Housing Opportunity."), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 18,

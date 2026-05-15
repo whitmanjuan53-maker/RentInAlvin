@@ -49,15 +49,6 @@ function HomePage() {
           background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
         }} />
         <div className="ys-hero-content" style={{ maxWidth: 1400, margin: "0 auto", width: "100%", flex: "1 0 auto", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: 10,
-            fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
-            color: p.inkSoft, marginBottom: 24, fontWeight: 500
-          }}>
-            <span style={{ width: 20, height: 1, background: p.inkSoft }}></span>
-            Apartments &amp; townhomes in Alvin, Texas
-          </div>
-
           <h1 style={{
             fontFamily: `'${displayFont}', serif`,
             fontSize: "clamp(56px, 8vw, 120px)",
@@ -76,7 +67,7 @@ function HomePage() {
             fontSize: 20, lineHeight: 1.6, color: p.inkSoft,
             maxWidth: "52ch", margin: "24px 0 0"
           }}>
-            RentInAlvin manages over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
+            Yellowstone Asset Management manages over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
           </p>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
@@ -225,7 +216,7 @@ function HomePage() {
                 p={p}
                 displayFont={displayFont}
                 marginBottom={32}
-                eyebrow="Why RentInAlvin"
+                eyebrow="Why Yellowstone Asset Management"
                 title="Built around the way Alvin actually lives." />
               <p style={{ fontSize: 17, lineHeight: 1.6, color: p.inkSoft, maxWidth: "48ch" }}>
                 Every property we manage is within ten minutes of our office at 410 S 2nd St. When you call, you reach the team that manages your home — not a call center.

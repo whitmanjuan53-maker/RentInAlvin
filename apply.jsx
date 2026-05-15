@@ -3,7 +3,7 @@ const { useState: useStateA } = React;
 
 /* ============================================================
    Online Application, multi-step form
-   Connects to real backend via RentInAlvinAPI
+   Connects to real backend via Yellowstone Asset Management API
 ============================================================ */
 
 const PROPERTY_OPTIONS = [

@@ -3,7 +3,7 @@ const { useState: useStateB, useEffect: useEffectB, useMemo: useMemoB } = React;
 
 /* ============================================================
    Tour booking modal — 3-step flow
-   Connects to real backend via RentInAlvinAPI
+   Connects to real backend via Yellowstone Asset Management API
 ============================================================ */
 
 const BOOKING_PROPERTIES = [

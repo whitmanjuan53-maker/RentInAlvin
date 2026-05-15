@@ -131,7 +131,7 @@ function PropertyDetailPage() {
     document.body.style.background = p.bg;
     document.body.style.color = p.ink;
     if (property) {
-      document.title = `${property.name} | RentInAlvin — Apartments & Townhomes in Alvin, TX`;
+      document.title = `${property.name} | Yellowstone Asset Management`;
     }
   }, [p, property]);
 

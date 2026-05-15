@@ -1,22 +1,19 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "js/**",
-          "images/**",
-          "data/**",
-          "*.html",
-          "api-client.js",
-          "*.css"
-        ]
-      }
+  "installCommand": "npm ci --no-audit --no-fund",
+  "functions": {
+    "server.js": {
+      "includeFiles": [
+        "js/**",
+        "images/**",
+        "data/**",
+        "*.html",
+        "api-client.js",
+        "*.css"
+      ]
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",

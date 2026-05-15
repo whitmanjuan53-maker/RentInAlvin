@@ -30,7 +30,6 @@
     "nodemailer": "^6.10.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "@types/better-sqlite3": "^7.6.13",
@@ -48,6 +47,6 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "22.x"
   }
 }

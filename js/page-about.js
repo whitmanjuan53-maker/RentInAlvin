@@ -73,7 +73,7 @@ function AboutPage() {
     style: {
       color: p.ink
     }
-  }, "RentInAlvin"), " is managed by Yellowstone Asset Management, a family-run property management company based at 410 S 2nd Street in Alvin, Texas."), /*#__PURE__*/React.createElement("p", {
+  }, "Yellowstone Asset Management"), " is a family-run property management company based at 410 S 2nd Street in Alvin, Texas."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 17,
       lineHeight: 1.65,

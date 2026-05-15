@@ -7,7 +7,7 @@ const {
 
 /* ============================================================
    Online Application, multi-step form
-   Connects to real backend via RentInAlvinAPI
+   Connects to real backend via Yellowstone Asset Management API
 ============================================================ */
 
 const PROPERTY_OPTIONS = ["Kings Haven Apartments, 410 S 2nd St", "Kings Manor Townhomes, 328 S 2nd St", "Kings Haven Apartments, 100 S 2nd St", "French Quarter Residency, 2550 S Bypass 35", "The White House Apartments, 1606 W Sealy St", "No preference, recommend one for me"];
