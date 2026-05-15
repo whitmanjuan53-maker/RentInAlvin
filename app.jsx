@@ -429,7 +429,7 @@ function Hero({ p, displayFont, showStats }) {
             Yellowstone Asset Management cares for over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <a href="#" onClick={(e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }} style={{
+            <a href="book-tour.html" style={{
               padding: "15px 28px", background: p.primary, color: p.paper,
               textDecoration: "none", fontSize: 15, fontWeight: 600,
               borderRadius: 10, letterSpacing: "0.01em",
@@ -609,10 +609,7 @@ function PropertyCard({ prop, p, idx }) {
               View details
             </a>
             <span style={{ color: p.line, fontSize: 13 }}>|</span>
-            <a href="#" onClick={(e) => {
-              e.preventDefault();
-              window.__openBooking && window.__openBooking(prop.id || "");
-            }} style={{
+            <a href={`book-tour.html?property=${prop.id}`} style={{
               fontSize: 13, fontWeight: 600, color: p.ink, textDecoration: "none",
               display: "inline-flex", alignItems: "center", gap: 6,
               transition: "color 200ms ease"
@@ -789,7 +786,7 @@ function Floorplans({ p, displayFont }) {
                 <div style={{ fontSize: 17 }}>One month's rent</div>
               </div>
             </div>
-            <a href="#" onClick={(e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }} style={{
+            <a href="book-tour.html" style={{
               marginTop: 28,
               display: "inline-flex", alignItems: "center", gap: 10,
               padding: "14px 26px",
@@ -888,8 +885,7 @@ function Contact({ p, displayFont }) {
     label: "Book a viewing",
     detail: "30 minutes · in-person or virtual",
     action: "Schedule a tour",
-    href: "#",
-    onClick: (e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }
+    href: "book-tour.html"
   },
   {
     key: "call",
@@ -1696,7 +1692,7 @@ function Footer({ p, displayFont }) {
               onMouseOut={(e) => { e.currentTarget.style.color = "inherit"; e.currentTarget.style.transform = "translateX(0)"; }}>
               office@yellowstone-am.com
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }}
+            <a href="book-tour.html"
               style={{
                 ...footerLink, marginTop: 8,
                 color: p.accent, fontWeight: 600

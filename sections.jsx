@@ -136,13 +136,15 @@ function Availability({ p, displayFont, limit, compact }) {
                     {u.ready}
                   </div>
                 </div>
-                <a href="#" onClick={(e) => { e.preventDefault(); window.__openBooking && window.__openBooking(); }} style={{
+                <a href="book-tour.html" style={{
                   fontSize: 13, fontWeight: 600, color: p.ink,
                   textDecoration: "none",
                   padding: "10px 16px",
                   border: `1px solid ${p.ink}`,
                   borderRadius: 10,
-                  transition: "all 200ms ease"
+                  transition: "all 200ms ease",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer"
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.background = p.ink; e.currentTarget.style.color = p.paper; }}
                 onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = p.ink; }}>

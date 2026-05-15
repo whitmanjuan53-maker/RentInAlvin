@@ -558,11 +558,7 @@ function Hero({
       flexWrap: "wrap"
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    onClick: e => {
-      e.preventDefault();
-      window.__openBooking && window.__openBooking();
-    },
+    href: "book-tour.html",
     style: {
       padding: "15px 28px",
       background: p.primary,
@@ -885,11 +881,7 @@ function PropertyCard({
       fontSize: 13
     }
   }, "|"), /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    onClick: e => {
-      e.preventDefault();
-      window.__openBooking && window.__openBooking(prop.id || "");
-    },
+    href: `book-tour.html?property=${prop.id}`,
     style: {
       fontSize: 13,
       fontWeight: 600,
@@ -1169,11 +1161,7 @@ function Floorplans({
       fontSize: 17
     }
   }, "One month's rent"))), /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    onClick: e => {
-      e.preventDefault();
-      window.__openBooking && window.__openBooking();
-    },
+    href: "book-tour.html",
     style: {
       marginTop: 28,
       display: "inline-flex",
@@ -1309,11 +1297,7 @@ function Contact({
     label: "Book a viewing",
     detail: "30 minutes · in-person or virtual",
     action: "Schedule a tour",
-    href: "#",
-    onClick: e => {
-      e.preventDefault();
-      window.__openBooking && window.__openBooking();
-    }
+    href: "book-tour.html"
   }, {
     key: "call",
     eyebrow: "Mon–Fri · 9–5 CT",
@@ -2607,11 +2591,7 @@ function Footer({
       e.currentTarget.style.transform = "translateX(0)";
     }
   }, "office@yellowstone-am.com"), /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    onClick: e => {
-      e.preventDefault();
-      window.__openBooking && window.__openBooking();
-    },
+    href: "book-tour.html",
     style: {
       ...footerLink,
       marginTop: 8,
