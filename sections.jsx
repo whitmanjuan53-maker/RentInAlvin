@@ -207,6 +207,17 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Handle window resize to re-calculate map size
+  useEffectS(() => {
+    const handleResize = () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize({ animate: false, pan: false });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Initialize Leaflet immediately on mount
   useEffectS(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -304,9 +315,12 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
         setMapLoaded(true);
         // Ensure Leaflet recalculates container dimensions after layout settles
         // Multiple calls at different times to handle various layout scenarios
-        requestAnimationFrame(() => map.invalidateSize());
-        setTimeout(() => map.invalidateSize(), 100);
-        setTimeout(() => map.invalidateSize(), 500);
+        const invalidate = () => { if (map) map.invalidateSize({ animate: false, pan: false }); };
+        requestAnimationFrame(invalidate);
+        setTimeout(invalidate, 100);
+        setTimeout(invalidate, 300);
+        setTimeout(invalidate, 600);
+        setTimeout(invalidate, 1000);
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
@@ -545,14 +559,15 @@ function AlvinMap({ p, displayFont, focusedProperty }) {
               border: `1px solid ${p.line}`,
               borderRadius: 12,
               overflow: "hidden",
-              touchAction: "auto"
+              touchAction: "auto",
+              minHeight: isMobile ? 380 : 420
             }}
           >
             {mapError ? (
               <Fallback />
             ) : (
               <>
-                <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
+                <div ref={mapRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }} />
                 {!mapLoaded && (
                   <div style={{
                     position: "absolute", inset: 0, zIndex: 2,
