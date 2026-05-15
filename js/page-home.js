@@ -1,5 +1,20 @@
 /* global React, ReactDOM */
-const {
+
+// Wrap everything to ensure proper initialization
+(function() {
+  'use strict';
+  
+  // Helper to wait for dependencies
+  function waitForDeps(callback) {
+    if (!window.Shared || !window.React || !window.ReactDOM) {
+      setTimeout(() => waitForDeps(callback), 100);
+      return;
+    }
+    callback();
+  }
+  
+  waitForDeps(function() {
+    const {
   useState,
   useEffect
 } = React;
@@ -564,3 +579,5 @@ function HomePage() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(HomePage, null));
+  }); // Close waitForDeps callback
+})(); // Close wrapper IIFE
