@@ -4,7 +4,17 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "js/**",
+          "images/**",
+          "data/**",
+          "*.html",
+          "api-client.js",
+          "*.css"
+        ]
+      }
     }
   ],
   "routes": [
