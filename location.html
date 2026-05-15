@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHrm163CDy4uhO7iRJ7YwEeK8AVfE3geN33C5u00D2m5yD" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
@@ -23,13 +23,13 @@
     .ys-map-popup .leaflet-popup-tip { background: #fff; }
     .ys-map-popup a.leaflet-popup-close-button { color: #2D2D2D; font-size: 18px; top: 6px; right: 6px; width: 24px; height: 24px; text-align: center; line-height: 24px; background: rgba(255,255,255,0.85); border-radius: 50%; }
     @media (max-width: 540px) { .ys-map-popup .leaflet-popup-content-wrapper { max-width: 240px; } }
-    @media (max-width: 960px) { :root { --pad-x: 24px; --pad-x-lg: 48px; } .ys-nav-links { display: none !important; } .ys-nav-burger { display: flex !important; } .ys-map-grid { grid-template-columns: 1fr !important; gap: 24px !important; } .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } }
+    @media (max-width: 960px) { :root { --pad-x: 24px; --pad-x-lg: 48px; } .ys-nav-links { display: none !important; } .ys-nav-burger { display: flex !important; } .ys-map-grid { grid-template-columns: 1fr !important; gap: 24px !important; } .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } .ys-location-hero { grid-template-columns: 1fr !important; gap: 32px !important; } }
     @media (max-width: 540px) { :root { --pad-x: 20px; --pad-x-lg: 40px; } .ys-footer-grid { grid-template-columns: 1fr !important; } }
   </style>
 </head>
 <body>
   <div id="root"></div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPloo7XeXUOzBmxwiTCxM7e49BjJ9R72ldLgcI8+8Q6iWldahKKVJ6tC13L3lN" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>

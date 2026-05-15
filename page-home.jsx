@@ -28,13 +28,27 @@ function HomePage() {
       {/* Hero */}
       <section className="ys-hero" style={{
         position: "relative",
-        padding: "80px 24px 0",
-        minHeight: "calc(100vh - 60px)",
+        padding: "60px 24px 0",
+        minHeight: "calc(100vh - 260px)",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        overflow: "hidden"
       }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", width: "100%", flex: "1 0 auto", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <style>{"@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"}</style>
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0,
+          backgroundImage: "url(images/hero-aerial.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          animation: "kenBurnsHome 25s ease-in-out infinite alternate"
+        }} />
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1,
+          background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
+        }} />
+        <div className="ys-hero-content" style={{ maxWidth: 1400, margin: "0 auto", width: "100%", flex: "1 0 auto", display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div style={{
             display: "flex", alignItems: "center", gap: 10,
             fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
@@ -89,16 +103,20 @@ function HomePage() {
               See properties
             </a>
           </div>
+
         </div>
 
-        {tweaks.showStats && (
+      </section>
+
+      {tweaks.showStats && (
+        <section style={{
+          background: p.paper,
+          padding: "24px var(--pad-x)",
+          borderTop: `1px solid ${p.line}`
+        }}>
           <div style={{
             maxWidth: 1400, margin: "0 auto", width: "100%",
-            marginTop: "auto",
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
-            borderTop: `1px solid ${p.line}`,
-            paddingTop: 20,
-            paddingBottom: 24
+            display: "grid", gridTemplateColumns: "repeat(4, 1fr)"
           }} className="ys-hero-stats">
             {[
               ["150+", "units managed"],
@@ -112,19 +130,19 @@ function HomePage() {
               }}>
                 <div style={{
                   fontFamily: `'${displayFont}', serif`,
-                  fontSize: "clamp(32px, 3.5vw, 48px)", lineHeight: 1, color: p.ink,
+                  fontSize: "clamp(36px, 4vw, 56px)", lineHeight: 1, color: p.ink,
                   letterSpacing: "-0.02em"
                 }}>{n}</div>
                 <div style={{
-                  fontSize: 13, letterSpacing: "0.06em",
+                  fontSize: 13, letterSpacing: "0.08em",
                   textTransform: "uppercase", color: p.inkSoft,
-                  marginTop: 8, fontWeight: 500
+                  marginTop: 10, fontWeight: 600
                 }}>{label}</div>
               </div>
             ))}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* Apply CTA Strip */}
       <section style={{

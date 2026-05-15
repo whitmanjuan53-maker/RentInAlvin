@@ -56,7 +56,8 @@ const PROPERTIES = [
     id: "kings-haven",
     name: "Kings Haven Apartments",
     addr: "410 S 2nd St",
-    lat: 29.4218,
+    fullAddr: "410 S 2nd St, Alvin, TX 77511",
+    lat: 29.4208,
     lng: -95.2442,
     office: true,
     tag: "Flagship · Office on-site",
@@ -80,7 +81,8 @@ const PROPERTIES = [
     id: "kings-manor",
     name: "Kings Manor Townhomes",
     addr: "328 S 2nd St",
-    lat: 29.4225,
+    fullAddr: "328 S 2nd St, Alvin, TX 77511",
+    lat: 29.4215,
     lng: -95.2441,
     tag: "Townhome",
     units: "2BR · 2.5BA · 3BR · 2.5BA · 1,250 sq ft",
@@ -103,7 +105,8 @@ const PROPERTIES = [
     id: "kings-haven-100",
     name: "Kings Haven Apartments",
     addr: "100 S 2nd St",
-    lat: 29.4245,
+    fullAddr: "100 S 2nd St, Alvin, TX 77511",
+    lat: 29.4235,
     lng: -95.2439,
     tag: "Apartments",
     units: "2BR · 1BA · 850 sq ft",
@@ -126,6 +129,7 @@ const PROPERTIES = [
     id: "french-quarter",
     name: "French Quarter Residency",
     addr: "2550 S Bypass 35",
+    fullAddr: "2550 S Bypass 35, Alvin, TX 77511",
     lat: 29.3950,
     lng: -95.2330,
     tag: "Apartments",
@@ -149,6 +153,7 @@ const PROPERTIES = [
     id: "white-house",
     name: "The White House Apartments",
     addr: "1606 W Sealy St",
+    fullAddr: "1606 Sealy St, Alvin, TX 77511",
     lat: 29.4260,
     lng: -95.2550,
     tag: "Apartments",
@@ -234,16 +239,9 @@ function Nav({ p, currentPage }) {
       display: "flex", alignItems: "center", justifyContent: "space-between"
     }}>
       <a href="index.html" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: p.ink }}>
-        <div style={{
-          width: 36, height: 36, borderRadius: 6,
-          background: p.primary, color: p.paper,
-          display: "grid", placeItems: "center",
-          fontFamily: "'Lora', serif",
-          fontSize: 20, fontStyle: "italic", lineHeight: 1
-        }}>R</div>
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-          <span style={{ fontFamily: "'Lora', serif", fontSize: 20, letterSpacing: "-0.01em" }}>
-            RentInAlvin
+          <span style={{ fontFamily: "'Lora', serif", fontSize: 22, letterSpacing: "-0.01em", fontWeight: 500 }}>
+            RentInAlvin.com
           </span>
           <span style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: p.inkSoft, fontWeight: 500 }}>
             Managed by Yellowstone Asset Management
@@ -952,10 +950,10 @@ function Footer({ p, displayFont }) {
           <div>
             <div style={{
               fontFamily: `'${displayFont}', serif`,
-              fontSize: "clamp(30px, 3.2vw, 40px)",
+              fontSize: "clamp(26px, 2.8vw, 36px)",
               color: p.paper, lineHeight: 1, letterSpacing: "-0.01em"
             }}>
-              RentInAlvin
+              RentInAlvin.com
             </div>
             <div style={{
               width: 40, height: 2, background: p.accent,

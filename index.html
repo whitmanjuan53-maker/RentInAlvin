@@ -42,7 +42,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHrm163CDy4uhO7iRJ7YwEeK8AVfE3geN33C5u00D2m5yD" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
@@ -106,6 +106,33 @@
     .ys-map-popup .leaflet-popup-tip { background: #fff; }
     .ys-map-popup a.leaflet-popup-close-button { color: #2D2D2D; font-size: 18px; top: 6px; right: 6px; width: 24px; height: 24px; text-align: center; line-height: 24px; background: rgba(255,255,255,0.85); border-radius: 50%; }
     @media (max-width: 540px) { .ys-map-popup .leaflet-popup-content-wrapper { max-width: 240px; } }
+
+    /* Hero background video / image */
+    .ys-hero-media {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .ys-hero-media-img {
+      animation: kenBurns 25s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.1) translate(-1%, -1%); }
+    }
+    .ys-hero-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+      background: linear-gradient(120deg, rgba(250,250,248,0.70) 0%, rgba(250,250,248,0.40) 45%, rgba(250,250,248,0.10) 75%, rgba(250,250,248,0) 100%);
+    }
+    .ys-hero-content {
+      position: relative;
+      z-index: 2;
+    }
     @media (min-width: 1100px) {
       .ys-avail-grid { grid-template-columns: repeat(3, 1fr) !important; }
     }
@@ -122,7 +149,7 @@
 <body>
   <div id="root"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPloo7XeXUOzBmxwiTCxM7e49BjJ9R72ldLgcI8+8Q6iWldahKKVJ6tC13L3lN" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -132,6 +159,133 @@
   <script type="text/babel" src="booking.jsx"></script>
   <script type="text/babel" src="sections.jsx"></script>
   <script type="text/babel" src="shared.jsx"></script>
-  <script type="text/babel" src="page-home.jsx"></script>
+  <script type="text/babel" src="page-home.jsx?v=8"></script>
+
+  <!-- Look & Lease Popup -->
+  <style>
+    .ys-popup-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(27, 42, 74, 0.35);
+      backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0;
+      transition: opacity 350ms ease;
+    }
+    .ys-popup-overlay.active { display: flex; opacity: 1; }
+    .ys-popup-card {
+      position: relative; width: 100%; max-width: 480px;
+      border-radius: 14px; overflow: hidden;
+      background: #FAFAF8;
+      border: 1px solid rgba(27, 42, 74, 0.10);
+      box-shadow: 0 16px 48px rgba(27, 42, 74, 0.14);
+      color: #2D2D2D; text-align: center;
+    }
+    .ys-popup-banner {
+      position: relative; height: 140px;
+      background: url('images/hero-aerial.jpg') center/cover no-repeat;
+    }
+    .ys-popup-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(250,250,248,0.20) 0%, rgba(250,250,248,0.85) 100%);
+    }
+    .ys-popup-content { padding: 28px 36px 36px; }
+    .ys-popup-close {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      width: 36px; height: 36px; border-radius: 50%; border: none;
+      background: rgba(250,250,248,0.92); color: #2D2D2D; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(27,42,74,0.10);
+      transition: background 200ms ease, transform 200ms ease;
+    }
+    .ys-popup-close:hover { background: #FFFFFF; transform: scale(1.05); }
+    .ys-popup-close svg { width: 18px; height: 18px; }
+    .ys-popup-logo {
+      font-family: 'Lora', Georgia, serif; font-size: 20px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 6px; color: #1B2A4A;
+    }
+    .ys-popup-tagline {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: #C9A96E; margin-bottom: 20px;
+    }
+    .ys-popup-headline {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 34px; font-weight: 700; line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px;
+      color: #2D2D2D;
+    }
+    .ys-popup-sub {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 17px; line-height: 1.55; color: #5A5A5A;
+      margin-bottom: 28px; max-width: 340px; margin-left: auto; margin-right: auto;
+    }
+    .ys-popup-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 10px;
+      background: #1B2A4A; color: #FAFAF8;
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.02em;
+      text-transform: uppercase; text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(27,42,74,0.12);
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+    .ys-popup-btn:hover {
+      transform: translateY(-2px); background: #243554;
+      box-shadow: 0 8px 24px rgba(27,42,74,0.18);
+    }
+    @media (max-width: 540px) {
+      .ys-popup-card { max-width: 100%; }
+      .ys-popup-content { padding: 24px 24px 32px; }
+      .ys-popup-headline { font-size: 28px; }
+      .ys-popup-sub { font-size: 16px; }
+      .ys-popup-logo { font-size: 18px; }
+      .ys-popup-banner { height: 120px; }
+    }
+  </style>
+  <div id="ysLookLeasePopup" class="ys-popup-overlay" aria-hidden="true">
+    <div class="ys-popup-card" role="dialog" aria-modal="true" aria-labelledby="ysPopupTitle">
+      <div class="ys-popup-banner" aria-hidden="true"></div>
+      <button class="ys-popup-close" onclick="closeYsPopup()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="ys-popup-content">
+        <div class="ys-popup-logo">RentInAlvin</div>
+        <div class="ys-popup-tagline">Managed by Yellowstone</div>
+        <div class="ys-popup-headline" id="ysPopupTitle">Look &amp; Lease Special!</div>
+        <div class="ys-popup-sub">Tour today and sign a lease to receive an exclusive move-in offer. Limited time only!</div>
+        <a class="ys-popup-btn" href="contact.html">Contact Us</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var shown = sessionStorage.getItem('ysLookLeaseShown');
+      if (shown) return;
+      function openPopup() {
+        var popup = document.getElementById('ysLookLeasePopup');
+        if (!popup) return;
+        popup.style.display = 'flex';
+        void popup.offsetWidth;
+        popup.classList.add('active');
+        popup.setAttribute('aria-hidden', 'false');
+      }
+      function closePopup() {
+        var popup = document.getElementById('ysLookLeasePopup');
+        if (!popup) return;
+        popup.classList.remove('active');
+        popup.setAttribute('aria-hidden', 'true');
+        setTimeout(function() { popup.style.display = 'none'; }, 350);
+        sessionStorage.setItem('ysLookLeaseShown', '1');
+      }
+      window.closeYsPopup = closePopup;
+      setTimeout(openPopup, 3000);
+      var popup = document.getElementById('ysLookLeasePopup');
+      if (popup) {
+        popup.addEventListener('click', function(e) { if (e.target === popup) closePopup(); });
+      }
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePopup(); });
+    })();
+  </script>
 </body>
 </html>

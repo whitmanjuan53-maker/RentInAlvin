@@ -367,21 +367,26 @@ function Hero({ p, displayFont, showStats }) {
   return (
     <section id="top" style={{
       position: "relative",
-      padding: "160px var(--pad-x) 80px",
-      minHeight: "100vh",
+      padding: "100px var(--pad-x) 24px",
+      minHeight: "calc(100vh - 260px)",
       display: "flex", flexDirection: "column", justifyContent: "space-between",
       overflow: "hidden"
     }}>
-      {/* Hero background image */}
+      <style>{"@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"}</style>
       <div style={{
-        position: "absolute", inset: 0, zIndex: 0,
-        background: `linear-gradient(to bottom, color-mix(in oklab, ${p.bg} 75%, transparent) 0%, ${p.bg} 100%), url(${PLACEHOLDER_IMAGES.hero})`,
+        position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0,
+        backgroundImage: "url(images/hero-aerial.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        opacity: 0.6
+        backgroundRepeat: "no-repeat",
+        animation: "kenBurnsHome 25s ease-in-out infinite alternate"
+      }} />
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1,
+        background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", width: "100%" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", width: "100%" }}>
         <div style={{
           display: "flex", alignItems: "center", gap: 14,
           fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase",
@@ -448,14 +453,17 @@ function Hero({ p, displayFont, showStats }) {
         </div>
       </div>
 
-      {showStats && (
+    </section>
+
+    {showStats && (
+      <section style={{
+        background: p.paper,
+        padding: "24px var(--pad-x)",
+        borderTop: `1px solid ${p.line}`
+      }}>
         <div style={{
           maxWidth: 1280, margin: "0 auto", width: "100%",
-          marginTop: 64,
-          display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
-          borderTop: `1px solid ${p.line}`,
-          paddingTop: 28,
-          position: "relative", zIndex: 1
+          display: "grid", gridTemplateColumns: "repeat(4, 1fr)"
         }} className="ys-hero-stats">
           {[
             ["150+", "units managed"],
@@ -469,19 +477,19 @@ function Hero({ p, displayFont, showStats }) {
             }}>
               <div style={{
                 fontFamily: `'${displayFont}', serif`,
-                fontSize: "clamp(32px, 3.6vw, 48px)", lineHeight: 1, color: p.primary,
+                fontSize: "clamp(36px, 4vw, 56px)", lineHeight: 1, color: p.primary,
                 letterSpacing: "-0.02em"
               }}>{n}</div>
               <div style={{
                 fontSize: 12, letterSpacing: "0.1em",
                 textTransform: "uppercase", color: p.inkSoft,
-                marginTop: 8, fontWeight: 500
+                marginTop: 10, fontWeight: 600
               }}>{label}</div>
             </div>
           ))}
         </div>
-      )}
-    </section>);
+      </section>
+    )}
 
 }
 

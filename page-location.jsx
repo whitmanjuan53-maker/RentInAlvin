@@ -24,12 +24,30 @@ function LocationPage() {
 
       <section style={{ padding: "120px var(--pad-x) 40px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <SectionHead
-            p={p}
-            displayFont={displayFont}
-            eyebrow="Location"
-            title="Everything is close in Alvin."
-            lead="All five properties are within city limits and a short drive from our leasing office." />
+          <div className="ys-location-hero" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
+            <SectionHead
+              p={p}
+              displayFont={displayFont}
+              eyebrow="Location"
+              title="Everything is close in Alvin."
+              lead="All five properties are within city limits and a short drive from our leasing office." />
+            <div style={{ position: "relative", borderRadius: 14, overflow: "hidden", border: `1px solid ${p.line}`, aspectRatio: "4/3", background: p.paper, marginTop: 32 }}>
+              <img
+                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop&q=80"
+                alt="Alvin local schools"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                padding: "20px 24px",
+                background: "linear-gradient(to top, rgba(27,42,74,0.65), transparent)",
+                color: "#fff"
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.04em" }}>Alvin Independent School District</div>
+                <div style={{ fontSize: 12, opacity: 0.85, marginTop: 2 }}>Highly rated schools minutes from every property</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
