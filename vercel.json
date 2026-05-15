@@ -4,14 +4,7 @@
   "installCommand": "npm ci --no-audit --no-fund",
   "functions": {
     "server.js": {
-      "includeFiles": [
-        "js/**",
-        "images/**",
-        "data/**",
-        "*.html",
-        "api-client.js",
-        "*.css"
-      ]
+      "includeFiles": "{js/**,images/**,data/**,*.html,api-client.js,*.css}"
     }
   },
   "routes": [
