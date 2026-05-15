@@ -382,8 +382,23 @@ app.post('/api/submit/inquiry', formLimiter, (req, res) => {
 // ============================================================
 
 // Serve static assets with proper content types
-// Use process.cwd() for Vercel compatibility (serverless __dirname != project root)
-const STATIC_ROOT = process.env.VERCEL ? process.cwd() : __dirname;
+// Vercel serverless functions run from a build directory; try multiple roots
+const fs = require('fs');
+function findStaticRoot() {
+  const candidates = [
+    process.env.VERCEL ? process.cwd() : null,
+    path.join(__dirname, '..'),
+    __dirname,
+    process.cwd()
+  ].filter(Boolean);
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'index.html'))) {
+      return dir;
+    }
+  }
+  return __dirname;
+}
+const STATIC_ROOT = findStaticRoot();
 app.use(express.static(path.join(STATIC_ROOT), {
   setHeaders: (res, filepath) => {
     if (filepath.endsWith('.jsx')) {
