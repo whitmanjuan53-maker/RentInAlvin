@@ -352,9 +352,9 @@ app.use(express.static(path.join(__dirname), {
   }
 }));
 
-// Fallback to index.html for SPA routes
+// Fallback to index.html for unmatched routes
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'Yellowstone Management.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Error handler

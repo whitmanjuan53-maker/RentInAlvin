@@ -389,7 +389,7 @@ function TourBooking({ open, onClose, p, displayFont, initialPropertyId, inline 
                 p={p}
                 error={fieldErrors.name}
               />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="ys-book-row">
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="ys-form-grid">
                 <Field
                   label="Phone"
                   value={phone}
@@ -504,7 +504,7 @@ function Field({ label, value, onChange, placeholder, type = "text", textarea, p
             padding: "13px 16px",
             border: `1px solid ${error ? '#EF4444' : p.line}`,
             background: p.bg,
-            fontFamily: "inherit", fontSize: 15, color: p.ink,
+            fontFamily: "inherit", fontSize: 16, color: p.ink,
             resize: "vertical",
             borderRadius: 10,
             outline: "none",
@@ -521,7 +521,7 @@ function Field({ label, value, onChange, placeholder, type = "text", textarea, p
             padding: "13px 16px",
             border: `1px solid ${error ? '#EF4444' : p.line}`,
             background: p.bg,
-            fontFamily: "inherit", fontSize: 15, color: p.ink,
+            fontFamily: "inherit", fontSize: 16, color: p.ink,
             borderRadius: 10,
             outline: "none",
             transition: "border-color 200ms ease, box-shadow 200ms ease"

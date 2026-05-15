@@ -1,0 +1,66 @@
+/* ============================================================
+   MOBILE FIXES — RentInAlvin
+   Linked from all pages for consistent mobile optimization
+============================================================ */
+
+/* iOS Safari zoom prevention — safety net for any inputs */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* Remove default tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Faster tap response */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Mobile nav menu scroll safety */
+.ys-nav-mobile {
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Property detail amenities — single column on small screens */
+@media (max-width: 540px) {
+  .ys-amenities-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Hero breathing room on small screens */
+@media (max-width: 540px) {
+  .ys-hero {
+    padding-top: 80px !important;
+    padding-bottom: 28px !important;
+  }
+}
+
+/* iframe responsiveness safety net */
+iframe {
+  max-width: 100%;
+}
+
+/* Gallery hero aspect ratio safety on very small screens */
+@media (max-width: 480px) {
+  .ys-gallery-hero {
+    aspect-ratio: 4 / 3 !important;
+  }
+}
+
+/* Ensure sticky FAB doesn't cover essential content */
+@media (max-width: 540px) {
+  .ys-fab-stack {
+    right: 12px !important;
+    bottom: 12px !important;
+  }
+  .ys-fab-stack a,
+  .ys-fab-stack button {
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+}

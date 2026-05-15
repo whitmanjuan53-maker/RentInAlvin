@@ -43,15 +43,15 @@
       .ys-gallery-grid { grid-template-columns: 1fr; gap: 12px; }
     }
   </style>
+  <link rel="stylesheet" href="mobile-fixes.css" />
 </head>
 <body>
   <div id="root"></div>
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
-  <script src="api-client.js"></script>
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-  <script type="text/babel" src="shared.jsx"></script>
-  <script type="text/babel" src="page-gallery.jsx"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+    <script src="api-client.js"></script>
+  <script src="js/tweaks-panel.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/page-gallery.js"></script>
 </body>
 </html>

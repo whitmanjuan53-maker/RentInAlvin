@@ -60,7 +60,7 @@ function ContactFormInline({ p, displayFont }) {
     borderRadius: 10,
     background: p.paper,
     fontFamily: "inherit",
-    fontSize: 15,
+    fontSize: 16,
     color: p.ink,
     width: "100%",
     outline: "none"

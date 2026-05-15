@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Static build verified' && node -e \"console.log('Build check passed')\"",
+    "build": "node build.js",
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",
     "test": "echo 'Run manual testing: start server and submit forms'"
@@ -30,6 +30,9 @@
     "nodemailer": "^6.10.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
     "@types/node": "^22.15.17",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

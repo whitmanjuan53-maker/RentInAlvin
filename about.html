@@ -20,16 +20,16 @@
     @media (max-width: 960px) { :root { --pad-x: 24px; --pad-x-lg: 48px; } .ys-nav-links { display: none !important; } .ys-nav-burger { display: flex !important; } .ys-faq-grid { grid-template-columns: 1fr !important; gap: 24px !important; } .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } }
     @media (max-width: 540px) { :root { --pad-x: 20px; --pad-x-lg: 40px; } .ys-footer-grid { grid-template-columns: 1fr !important; } }
   </style>
+  <link rel="stylesheet" href="mobile-fixes.css" />
 </head>
 <body>
   <div id="root"></div>
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
-  <script src="api-client.js"></script>
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-  <script type="text/babel" src="sections.jsx"></script>
-  <script type="text/babel" src="shared.jsx"></script>
-  <script type="text/babel" src="page-about.jsx"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+    <script src="api-client.js"></script>
+  <script src="js/tweaks-panel.js"></script>
+  <script src="js/sections.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/page-about.js"></script>
 </body>
 </html>

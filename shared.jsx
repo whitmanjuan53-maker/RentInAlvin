@@ -48,6 +48,16 @@ const PALETTES = {
     primarySoft: "#243554",
     accent: "#C9A96E",
     line: "rgba(27, 42, 74, 0.12)"
+  },
+  forest: {
+    bg: "#F4EEE4",
+    paper: "#FBF7F0",
+    ink: "#1A1815",
+    inkSoft: "#5C5750",
+    primary: "#1F3A2E",
+    primarySoft: "#2A4A3C",
+    accent: "#B5703D",
+    line: "rgba(26,24,21,0.12)"
   }
 };
 
@@ -215,6 +225,13 @@ function Nav({ p, currentPage }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [menuOpen]);
 
   const links = [
     { label: "Home", href: "index.html", id: "home" },
@@ -291,12 +308,21 @@ function Nav({ p, currentPage }) {
             <><path d="M2 5h14M2 9h14M2 13h14" stroke={p.ink} strokeWidth="1.6" strokeLinecap="round" /></>}
         </svg>
       </button>
-      {menuOpen &&
+      {menuOpen && (
+        <>
+        <div onClick={() => setMenuOpen(false)} style={{
+          position: "fixed", inset: 0, top: 72, zIndex: 49,
+          background: "rgba(27, 42, 74, 0.25)",
+          backdropFilter: "blur(2px)"
+        }} />
         <div className="ys-nav-mobile" style={{
-          position: "absolute", top: "100%", left: 0, right: 0,
+          position: "absolute", top: "100%", left: 0, right: 0, zIndex: 50,
           background: p.paper, borderBottom: `1px solid ${p.line}`,
           padding: "12px var(--pad-x) 20px",
-          display: "flex", flexDirection: "column", gap: 2
+          display: "flex", flexDirection: "column", gap: 2,
+          maxHeight: "80vh", overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
+          boxShadow: "0 20px 40px rgba(27, 42, 74, 0.12)"
         }}>
           {links.map((link) => (
             <a
@@ -316,10 +342,12 @@ function Nav({ p, currentPage }) {
             marginTop: 12, padding: "14px 20px",
             background: p.primary, color: p.paper,
             textDecoration: "none", fontSize: 15, fontWeight: 600,
-            textAlign: "center", borderRadius: 6
+            textAlign: "center", borderRadius: 6,
+            minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center"
           }}>Call (832) 210-3968</a>
         </div>
-      }
+        </>
+      )}
     </header>
   );
 }
@@ -914,9 +942,10 @@ function InstagramFeed({ p, displayFont }) {
 
 function Footer({ p, displayFont }) {
   const footerLink = {
-    display: "block", fontSize: 14, color: "inherit",
-    textDecoration: "none", padding: "5px 0",
-    transition: "color 200ms ease, transform 200ms ease"
+    display: "flex", alignItems: "center", fontSize: 14, color: "inherit",
+    textDecoration: "none", padding: "8px 0",
+    transition: "color 200ms ease, transform 200ms ease",
+    minHeight: 36
   };
   const headingStyle = {
     color: p.paper, fontWeight: 600, fontSize: 13,

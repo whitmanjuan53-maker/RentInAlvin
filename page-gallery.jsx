@@ -30,15 +30,15 @@ function Lightbox({ images, startIndex, onClose, p, propName, displayFont }) {
         position: "fixed", inset: 0, zIndex: 100,
         background: "rgba(0,0,0,0.92)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "40px 20px"
+        padding: "16px 12px"
       }}
     >
       {/* Close button */}
       <button
         onClick={onClose}
         style={{
-          position: "absolute", top: 20, right: 20,
-          width: 44, height: 44, borderRadius: "50%",
+          position: "absolute", top: 12, right: 12,
+          width: 40, height: 40, borderRadius: "50%",
           background: "rgba(255,255,255,0.15)", border: "none",
           color: "#fff", fontSize: 24, cursor: "pointer",
           display: "grid", placeItems: "center",
@@ -57,8 +57,8 @@ function Lightbox({ images, startIndex, onClose, p, propName, displayFont }) {
         <button
           onClick={(e) => { e.stopPropagation(); setIndex(i => (i - 1 + images.length) % images.length); }}
           style={{
-            position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)",
-            width: 48, height: 48, borderRadius: "50%",
+            position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
+            width: 44, height: 44, borderRadius: "50%",
             background: "rgba(255,255,255,0.15)", border: "none",
             color: "#fff", cursor: "pointer",
             display: "grid", placeItems: "center",
@@ -78,8 +78,8 @@ function Lightbox({ images, startIndex, onClose, p, propName, displayFont }) {
         <button
           onClick={(e) => { e.stopPropagation(); setIndex(i => (i + 1) % images.length); }}
           style={{
-            position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)",
-            width: 48, height: 48, borderRadius: "50%",
+            position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)",
+            width: 44, height: 44, borderRadius: "50%",
             background: "rgba(255,255,255,0.15)", border: "none",
             color: "#fff", cursor: "pointer",
             display: "grid", placeItems: "center",
@@ -98,7 +98,7 @@ function Lightbox({ images, startIndex, onClose, p, propName, displayFont }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: "90vw", maxHeight: "85vh",
+          maxWidth: "96vw", maxHeight: "88vh",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 12
         }}
       >

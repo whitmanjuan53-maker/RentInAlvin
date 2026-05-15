@@ -58,7 +58,7 @@ function Field({ label, children, required, span, p }) {
 function txt(p, error) {
   return {
     padding: "13px 16px",
-    fontSize: 15,
+    fontSize: 16,
     background: p.bg,
     border: `1px solid ${error ? '#EF4444' : p.line}`,
     borderRadius: 10,

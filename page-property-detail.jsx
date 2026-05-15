@@ -242,7 +242,7 @@ function PropertyDetailPage() {
                   }}>
                     Amenities
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+                  <div className="ys-amenities-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
                     {property.amenities.map((a, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                         <div style={{ width: 5, height: 5, borderRadius: "50%", background: p.accent, flexShrink: 0 }}></div>

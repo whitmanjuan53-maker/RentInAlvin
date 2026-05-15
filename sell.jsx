@@ -62,7 +62,7 @@ function SellProperty({ p, displayFont }) {
   const fieldStyle = (error) => ({
     width: "100%", padding: "13px 16px",
     background: p.bg, border: `1px solid ${error ? '#EF4444' : p.line}`,
-    color: p.ink, fontSize: 15,
+    color: p.ink, fontSize: 16,
     fontFamily: "inherit",
     borderRadius: 10, outline: "none",
     transition: "border-color 200ms ease, box-shadow 200ms ease"
@@ -262,7 +262,7 @@ function SellProperty({ p, displayFont }) {
                 )}
 
                 {/* Contact row */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="ys-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <div>
                     <label style={labelStyle}>Your name *</label>
                     <input required style={fieldStyle(fieldErrors.name)} value={form.name} onChange={e => update("name", e.target.value)} />
@@ -288,7 +288,7 @@ function SellProperty({ p, displayFont }) {
                   <label style={labelStyle}>Property address</label>
                   <input required style={fieldStyle()} value={form.addr} onChange={e => update("addr", e.target.value)} placeholder="Street, city, ZIP" />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }}>
+                <div className="ys-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }}>
                   <div>
                     <label style={labelStyle}>Property type</label>
                     <select style={fieldStyle()} value={form.type} onChange={e => update("type", e.target.value)}>
@@ -312,7 +312,7 @@ function SellProperty({ p, displayFont }) {
                     </select>
                   </div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginTop: 12 }}>
+                <div className="ys-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginTop: 12 }}>
                   <div>
                     <label style={labelStyle}>Beds</label>
                     <input style={fieldStyle()} value={form.beds} onChange={e => update("beds", e.target.value)} placeholder="3" />

@@ -246,6 +246,13 @@ function Nav({ p }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [menuOpen]);
 
   const links = [
   ["Available", "#availability"],
@@ -314,14 +321,22 @@ function Nav({ p }) {
           <><path d="M2 5h14M2 9h14M2 13h14" stroke={p.ink} strokeWidth="1.6" strokeLinecap="round" /></>}
         </svg>
       </button>
-      {menuOpen &&
-      <div className="ys-nav-mobile" style={{
-        position: "absolute", top: "100%", left: 0, right: 0,
-        background: p.paper, borderBottom: `1px solid ${p.line}`,
-        padding: "20px var(--pad-x) 28px",
-        display: "flex", flexDirection: "column", gap: 0,
-        boxShadow: "0 12px 32px rgba(27, 42, 74, 0.10)"
-      }}>
+      {menuOpen && (
+        <>
+        <div onClick={() => setMenuOpen(false)} style={{
+          position: "fixed", inset: 0, top: 72, zIndex: 49,
+          background: "rgba(27, 42, 74, 0.25)",
+          backdropFilter: "blur(2px)"
+        }} />
+        <div className="ys-nav-mobile" style={{
+          position: "absolute", top: "100%", left: 0, right: 0, zIndex: 50,
+          background: p.paper, borderBottom: `1px solid ${p.line}`,
+          padding: "20px var(--pad-x) 28px",
+          display: "flex", flexDirection: "column", gap: 0,
+          boxShadow: "0 20px 40px rgba(27, 42, 74, 0.12)",
+          maxHeight: "80vh", overflowY: "auto",
+          WebkitOverflowScrolling: "touch"
+        }}>
           {links.map(([label, href], i) =>
         <a key={href} href={href} onClick={() => setMenuOpen(false)} style={{
           color: p.ink, textDecoration: "none",
@@ -337,10 +352,12 @@ function Nav({ p }) {
           background: p.primary, color: p.paper,
           textDecoration: "none", fontSize: 15, fontWeight: 600,
           textAlign: "center", borderRadius: 8,
-          boxShadow: "0 2px 8px rgba(27, 42, 74, 0.12)"
+          boxShadow: "0 2px 8px rgba(27, 42, 74, 0.12)",
+          minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center"
         }}>Apply Now</a>
         </div>
-      }
+        </>
+      )}
     </header>);
 
 }
@@ -1087,7 +1104,7 @@ function ContactForm({ p, displayFont }) {
 
   const inputStyle = {
     padding: "13px 16px",
-    fontSize: 15,
+    fontSize: 16,
     background: p.bg,
     border: `1px solid ${p.line}`,
     borderRadius: 10,
@@ -1319,7 +1336,7 @@ function PropertyInquiry({ open, onClose, p, displayFont, initialProperty }) {
 
   const inputStyle = {
     padding: "13px 16px",
-    fontSize: 15,
+    fontSize: 16,
     background: p.bg,
     border: `1px solid ${p.line}`,
     borderRadius: 10,
