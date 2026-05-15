@@ -28,9 +28,13 @@ function HomePage() {
       {/* Hero */}
       <section className="ys-hero" style={{
         position: "relative",
-        padding: "100px var(--pad-x) 36px"
+        padding: "80px 24px 0",
+        minHeight: "calc(100vh - 60px)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
       }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", width: "100%", flex: "1 0 auto", display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div style={{
             display: "flex", alignItems: "center", gap: 10,
             fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
@@ -42,9 +46,9 @@ function HomePage() {
 
           <h1 style={{
             fontFamily: `'${displayFont}', serif`,
-            fontSize: "clamp(44px, 6.5vw, 96px)",
-            lineHeight: 0.98,
-            letterSpacing: "-0.02em",
+            fontSize: "clamp(56px, 8vw, 120px)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.03em",
             margin: 0,
             color: p.ink,
             fontWeight: 400,
@@ -55,8 +59,8 @@ function HomePage() {
           </h1>
 
           <p style={{
-            fontSize: 18, lineHeight: 1.6, color: p.inkSoft,
-            maxWidth: "46ch", margin: "20px 0 0"
+            fontSize: 20, lineHeight: 1.6, color: p.inkSoft,
+            maxWidth: "52ch", margin: "24px 0 0"
           }}>
             RentInAlvin manages over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
           </p>
@@ -89,11 +93,12 @@ function HomePage() {
 
         {tweaks.showStats && (
           <div style={{
-            maxWidth: 1280, margin: "0 auto", width: "100%",
-            marginTop: 36,
+            maxWidth: 1400, margin: "0 auto", width: "100%",
+            marginTop: "auto",
             display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
             borderTop: `1px solid ${p.line}`,
-            paddingTop: 20
+            paddingTop: 20,
+            paddingBottom: 24
           }} className="ys-hero-stats">
             {[
               ["150+", "units managed"],
