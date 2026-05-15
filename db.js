@@ -1,77 +1,91 @@
-const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const DB_PATH = process.env.DB_PATH || './data/leads.db';
+// Use /tmp on Vercel (read-only filesystem except /tmp)
+const DEFAULT_DB_PATH = process.env.VERCEL ? '/tmp/leads.db' : './data/leads.db';
+const DB_PATH = process.env.DB_PATH || DEFAULT_DB_PATH;
 const dbDir = path.dirname(DB_PATH);
 
-// Ensure data directory exists
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
-}
+let db = null;
+let dbAvailable = false;
 
-const db = new Database(DB_PATH);
-
-// Enable WAL mode for better concurrency
-db.pragma('journal_mode = WAL');
-
-// Create leads table if not exists (v1)
-db.exec(`
-  CREATE TABLE IF NOT EXISTS leads (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    lead_type TEXT NOT NULL,
-    property TEXT,
-    name TEXT NOT NULL,
-    phone TEXT,
-    email TEXT,
-    message TEXT,
-    preferred_date TEXT,
-    preferred_time TEXT,
-    submission_page TEXT,
-    status TEXT DEFAULT 'New',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    raw_data TEXT
-  )
-`);
-
-// Migration: add reply_to column if missing
 try {
-  db.prepare('SELECT reply_to FROM leads LIMIT 1').get();
-} catch (e) {
-  db.exec(`ALTER TABLE leads ADD COLUMN reply_to TEXT`);
-  console.log('[DB] Migrated: added reply_to column');
-}
+  const Database = require('better-sqlite3');
 
-// Migration: add assigned_to column if missing
-try {
-  db.prepare('SELECT assigned_to FROM leads LIMIT 1').get();
-} catch (e) {
-  db.exec(`ALTER TABLE leads ADD COLUMN assigned_to TEXT`);
-  console.log('[DB] Migrated: added assigned_to column');
-}
+  // Ensure data directory exists
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
 
-// Migration: add honeypot column if missing
-try {
-  db.prepare('SELECT honeypot FROM leads LIMIT 1').get();
-} catch (e) {
-  db.exec(`ALTER TABLE leads ADD COLUMN honeypot TEXT`);
-  console.log('[DB] Migrated: added honeypot column');
-}
+  db = new Database(DB_PATH);
+  dbAvailable = true;
 
-// Migration: add consent column if missing
-try {
-  db.prepare('SELECT consent FROM leads LIMIT 1').get();
-} catch (e) {
-  db.exec(`ALTER TABLE leads ADD COLUMN consent INTEGER DEFAULT 0`);
-  console.log('[DB] Migrated: added consent column');
-}
+  // Enable WAL mode for better concurrency
+  db.pragma('journal_mode = WAL');
 
-// Create index for common queries
-db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_type ON leads(lead_type)`);
-db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status)`);
-db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at)`);
-db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email)`);
+  // Create leads table if not exists (v1)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS leads (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      lead_type TEXT NOT NULL,
+      property TEXT,
+      name TEXT NOT NULL,
+      phone TEXT,
+      email TEXT,
+      message TEXT,
+      preferred_date TEXT,
+      preferred_time TEXT,
+      submission_page TEXT,
+      status TEXT DEFAULT 'New',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      raw_data TEXT
+    )
+  `);
+
+  // Migration: add reply_to column if missing
+  try {
+    db.prepare('SELECT reply_to FROM leads LIMIT 1').get();
+  } catch (e) {
+    db.exec(`ALTER TABLE leads ADD COLUMN reply_to TEXT`);
+    console.log('[DB] Migrated: added reply_to column');
+  }
+
+  // Migration: add assigned_to column if missing
+  try {
+    db.prepare('SELECT assigned_to FROM leads LIMIT 1').get();
+  } catch (e) {
+    db.exec(`ALTER TABLE leads ADD COLUMN assigned_to TEXT`);
+    console.log('[DB] Migrated: added assigned_to column');
+  }
+
+  // Migration: add honeypot column if missing
+  try {
+    db.prepare('SELECT honeypot FROM leads LIMIT 1').get();
+  } catch (e) {
+    db.exec(`ALTER TABLE leads ADD COLUMN honeypot TEXT`);
+    console.log('[DB] Migrated: added honeypot column');
+  }
+
+  // Migration: add consent column if missing
+  try {
+    db.prepare('SELECT consent FROM leads LIMIT 1').get();
+  } catch (e) {
+    db.exec(`ALTER TABLE leads ADD COLUMN consent INTEGER DEFAULT 0`);
+    console.log('[DB] Migrated: added consent column');
+  }
+
+  // Create index for common queries
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_type ON leads(lead_type)`);
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status)`);
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at)`);
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email)`);
+
+  console.log('[DB] SQLite connected at', DB_PATH);
+} catch (err) {
+  console.error('[DB] Failed to initialize SQLite:', err.message);
+  console.error('[DB] Leads will be logged but not persisted.');
+}
 
 /**
  * Save a lead to the database
@@ -79,6 +93,11 @@ db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email)`);
  * @returns {Object} saved lead with id
  */
 function saveLead(lead) {
+  if (!dbAvailable) {
+    console.log('[DB] saveLead (no DB):', lead.name, lead.lead_type);
+    return { id: Date.now(), ...lead };
+  }
+
   const stmt = db.prepare(`
     INSERT INTO leads (
       lead_type, property, name, phone, email, message,
@@ -119,6 +138,8 @@ function saveLead(lead) {
  * @returns {Array}
  */
 function getLeads(filters = {}) {
+  if (!dbAvailable) return [];
+
   let sql = 'SELECT * FROM leads WHERE 1=1';
   const params = {};
 
@@ -158,6 +179,8 @@ function getLeads(filters = {}) {
  * @returns {boolean}
  */
 function updateLeadStatus(id, status, assignedTo) {
+  if (!dbAvailable) return false;
+
   const stmt = db.prepare(`
     UPDATE leads SET status = @status, updated_at = CURRENT_TIMESTAMP
     ${assignedTo ? ', assigned_to = @assigned_to' : ''}
@@ -173,6 +196,8 @@ function updateLeadStatus(id, status, assignedTo) {
  * @returns {Object|null}
  */
 function getLeadById(id) {
+  if (!dbAvailable) return null;
+
   const stmt = db.prepare('SELECT * FROM leads WHERE id = ?');
   return stmt.get(id) || null;
 }
@@ -182,6 +207,10 @@ function getLeadById(id) {
  * @returns {Object}
  */
 function getLeadStats() {
+  if (!dbAvailable) {
+    return { total: 0, byType: [], byStatus: [], today: 0, thisWeek: 0, unassigned: 0 };
+  }
+
   const total = db.prepare('SELECT COUNT(*) as count FROM leads').get().count;
   const byType = db.prepare('SELECT lead_type, COUNT(*) as count FROM leads GROUP BY lead_type').all();
   const byStatus = db.prepare('SELECT status, COUNT(*) as count FROM leads GROUP BY status').all();

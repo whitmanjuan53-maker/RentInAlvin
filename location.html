@@ -18,6 +18,11 @@
     a { color: inherit; } em { font-style: italic; }
     ::selection { background: #1F3A2E; color: #FBF7F0; }
     :root { --pad-x: 40px; --pad-x-lg: 80px; }
+    .ys-map-popup .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 8px 32px rgba(27,42,74,0.18); padding: 0; overflow: hidden; }
+    .ys-map-popup .leaflet-popup-content { margin: 0; padding: 0; line-height: 1.4; }
+    .ys-map-popup .leaflet-popup-tip { background: #fff; }
+    .ys-map-popup a.leaflet-popup-close-button { color: #2D2D2D; font-size: 18px; top: 6px; right: 6px; width: 24px; height: 24px; text-align: center; line-height: 24px; background: rgba(255,255,255,0.85); border-radius: 50%; }
+    @media (max-width: 540px) { .ys-map-popup .leaflet-popup-content-wrapper { max-width: 240px; } }
     @media (max-width: 960px) { :root { --pad-x: 24px; --pad-x-lg: 48px; } .ys-nav-links { display: none !important; } .ys-nav-burger { display: flex !important; } .ys-map-grid { grid-template-columns: 1fr !important; gap: 24px !important; } .ys-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } }
     @media (max-width: 540px) { :root { --pad-x: 20px; --pad-x-lg: 40px; } .ys-footer-grid { grid-template-columns: 1fr !important; } }
   </style>

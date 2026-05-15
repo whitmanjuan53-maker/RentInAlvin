@@ -390,4 +390,10 @@ async function start() {
   });
 }
 
-start();
+// Export for Vercel serverless
+module.exports = app;
+
+// Start locally when not on Vercel
+if (!process.env.VERCEL) {
+  start();
+}

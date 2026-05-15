@@ -6,7 +6,7 @@ const {
   Nav, Footer, SectionHead, PropertyCard, InstagramFeed
 } = window.Shared;
 
-const { Availability } = window;
+const { Availability, AlvinMap } = window;
 
 function HomePage() {
   const [tweaks, setTweak] = (window.useTweaks || (() => [TWEAK_DEFAULTS, () => {}]))(TWEAK_DEFAULTS);
@@ -19,6 +19,7 @@ function HomePage() {
   }, [p]);
 
   const featuredProps = PROPERTIES.slice(0, 3);
+  const [focusedProperty, setFocusedProperty] = useState(null);
 
   return (
     <div style={{ background: p.bg, color: p.ink, minHeight: "100vh" }}>
@@ -166,7 +167,7 @@ function HomePage() {
             gap: 20
           }}>
             {featuredProps.map((prop, i) =>
-              <PropertyCard key={i} prop={prop} p={p} idx={i} displayFont={displayFont} />
+              <PropertyCard key={i} prop={prop} p={p} idx={i} displayFont={displayFont} onSelect={setFocusedProperty} />
             )}
           </div>
           <div style={{ textAlign: "center", marginTop: 36 }}>
@@ -188,6 +189,9 @@ function HomePage() {
 
       {/* Availability teaser */}
       {Availability && <Availability p={p} displayFont={displayFont} limit={3} compact />}
+
+      {/* Property Map */}
+      {AlvinMap && <AlvinMap p={p} displayFont={displayFont} focusedProperty={focusedProperty} />}
 
       {/* About teaser */}
       <section style={{ padding: "56px var(--pad-x)" }}>

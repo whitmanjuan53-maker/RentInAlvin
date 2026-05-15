@@ -159,87 +159,169 @@ function Availability({ p, displayFont, limit, compact }) {
 
 /* ----------------------------- Alvin Map ----------------------------- */
 
-const MAP_PROPS = [
-  { id: 0, name: "Kings Haven", addr: "410 S 2nd St", lat: 29.4218, lng: -95.2442, office: true },
-  { id: 1, name: "Kings Manor", addr: "328 S 2nd St", lat: 29.4225, lng: -95.2441 },
-  { id: 2, name: "Kings Haven (100)", addr: "100 S 2nd St", lat: 29.4245, lng: -95.2439 },
-  { id: 3, name: "French Quarter", addr: "2550 S Bypass 35", lat: 29.3950, lng: -95.2330 },
-  { id: 4, name: "White House", addr: "1606 W Sealy St", lat: 29.4260, lng: -95.2550 }
-];
+function getMapProps() {
+  const shared = window.Shared && window.Shared.PROPERTIES;
+  if (shared && Array.isArray(shared) && shared.length > 0 && shared[0].lat != null) {
+    return shared.map((prop, i) => ({
+      id: i,
+      slug: prop.id,
+      name: prop.name,
+      addr: prop.addr,
+      lat: prop.lat,
+      lng: prop.lng,
+      office: !!prop.office,
+      heroImage: prop.heroImage || "",
+      description: prop.description || prop.note || "",
+      note: prop.note || "",
+      price: prop.price || ""
+    }));
+  }
+  // Fallback hardcoded data (self-contained for pages without shared.jsx)
+  return [
+    { id: 0, slug: "kings-haven", name: "Kings Haven Apartments", addr: "410 S 2nd St", lat: 29.4218, lng: -95.2442, office: true, heroImage: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop&q=80", description: "Our flagship community and company headquarters.", note: "Headquarters of Yellowstone Management. Walkable to downtown Alvin.", price: "from $890" },
+    { id: 1, slug: "kings-manor", name: "Kings Manor Townhomes", addr: "328 S 2nd St", lat: 29.4225, lng: -95.2441, office: false, heroImage: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop&q=80", description: "Spacious two-story townhomes with private entries.", note: "Two-story townhomes with private entries and 2.5 baths.", price: "from $1,250" },
+    { id: 2, slug: "kings-haven-100", name: "Kings Haven Apartments", addr: "100 S 2nd St", lat: 29.4245, lng: -95.2439, office: false, heroImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop&q=80", description: "A quieter sister location with newly renovated interiors.", note: "Quiet block near 100 S 2nd; renovated interiors.", price: "from $850" },
+    { id: 3, slug: "french-quarter", name: "French Quarter Residency", addr: "2550 S Bypass 35", lat: 29.3950, lng: -95.2330, office: false, heroImage: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=400&h=300&fit=crop&q=80", description: "Our largest community along the bypass.", note: "Larger community along the bypass with ample parking.", price: "from $950" },
+    { id: 4, slug: "white-house", name: "The White House Apartments", addr: "1606 W Sealy St", lat: 29.4260, lng: -95.2550, office: false, heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop&q=80", description: "Classic white-clad architecture on a quiet street.", note: "Classic white-clad apartments on a quiet residential street.", price: "from $900" }
+  ];
+}
 
-function AlvinMap({ p, displayFont }) {
+function AlvinMap({ p, displayFont, focusedProperty }) {
+  const props = useMemoS(() => getMapProps(), []);
   const [active, setActive] = useStateS(0);
+  const [mapReady, setMapReady] = useStateS(false);
+  const [mapError, setMapError] = useStateS(false);
+  const [isMobile, setIsMobile] = useStateS(false);
+  const [mapActive, setMapActive] = useStateS(false);
+  const mapContainerRef = useRefS(null);
   const mapRef = useRefS(null);
   const mapInstanceRef = useRefS(null);
   const markersRef = useRefS([]);
 
   useEffectS(() => {
-    if (!mapRef.current || mapInstanceRef.current || typeof L === "undefined") return;
-
-    const map = L.map(mapRef.current, {
-      scrollWheelZoom: false,
-      attributionControl: false
-    }).setView([29.415, -95.240], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.control.attribution({ position: 'bottomright' }).addTo(map);
-
-    const markers = [];
-    MAP_PROPS.forEach((m) => {
-      const isOffice = m.office;
-      const markerColor = isOffice ? '#C9A96E' : '#1B2A4A';
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="
-          width: 28px; height: 28px; border-radius: 50% 50% 50% 0;
-          background: ${markerColor};
-          border: 2px solid #fff;
-          transform: rotate(-45deg);
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-          transition: all 200ms ease;
-        ">
-          <span style="
-            transform: rotate(45deg);
-            color: #fff; font-size: 11px; font-weight: 600;
-            font-family: 'Source Sans 3', sans-serif;
-          ">${isOffice ? '★' : m.id + 1}</span>
-        </div>`,
-        iconSize: [28, 28],
-        iconAnchor: [14, 28]
-      });
-
-      const marker = L.marker([m.lat, m.lng], { icon }).addTo(map);
-
-      const popupContent = document.createElement('div');
-      popupContent.innerHTML = `<strong style="font-family: '${displayFont}', serif; font-size: 14px;">${m.name}</strong><br/><span style="font-size: 12px; color: #5A5A5A;">${m.addr}${isOffice ? ' · Leasing office' : ''}</span>`;
-
-      const popup = L.popup({ offset: [0, -24], closeButton: true, className: 'ys-map-popup' })
-        .setContent(popupContent);
-
-      marker.bindPopup(popup);
-
-      marker.on('click', () => {
-        setActive(m.id);
-      });
-
-      markers.push(marker);
-    });
-
-    mapInstanceRef.current = map;
-    markersRef.current = markers;
-
-    return () => {
-      map.remove();
-      mapInstanceRef.current = null;
-      markersRef.current = [];
-    };
+    const check = () => setIsMobile(window.innerWidth <= 960);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Lazy load map when container enters viewport
+  useEffectS(() => {
+    if (!mapContainerRef.current || mapReady) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setMapReady(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, [mapReady]);
+
+  // Initialize Leaflet
+  useEffectS(() => {
+    if (!mapReady || !mapRef.current || mapInstanceRef.current) return;
+    if (typeof L === "undefined") {
+      console.error("[AlvinMap] Leaflet library not loaded. Check that leaflet.js is included before sections.jsx.");
+      setMapError(true);
+      return;
+    }
+    try {
+      const map = L.map(mapRef.current, {
+        scrollWheelZoom: false,
+        attributionControl: false
+      }).setView([29.415, -95.240], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      L.control.attribution({ position: "bottomright" }).addTo(map);
+
+      const markers = [];
+      props.forEach((m) => {
+        const isOffice = m.office;
+        const markerColor = isOffice ? p.accent : p.primary;
+        const icon = L.divIcon({
+          className: "",
+          html: `<div style="
+            width: 32px; height: 32px; border-radius: 50% 50% 50% 0;
+            background: ${markerColor};
+            border: 2.5px solid #fff;
+            transform: rotate(-45deg);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.28);
+            transition: all 200ms ease;
+          ">
+            <span style="
+              transform: rotate(45deg);
+              color: #fff; font-size: 12px; font-weight: 700;
+              font-family: 'Source Sans 3', sans-serif;
+            ">${isOffice ? "★" : m.id + 1}</span>
+          </div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 32]
+        });
+
+        const marker = L.marker([m.lat, m.lng], { icon }).addTo(map);
+
+        // Build rich popup
+        const popupEl = document.createElement("div");
+        popupEl.style.cssText = "font-family:'Source Sans 3',sans-serif;min-width:240px;max-width:280px;";
+        const imgHtml = m.heroImage
+          ? `<div style="position:relative;height:120px;border-radius:8px 8px 0 0;overflow:hidden;background:#eee;">
+               <img src="${m.heroImage}" alt="${m.name.replace(/"/g, '&quot;')}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" onerror="this.style.display='none'" />
+             </div>`
+          : "";
+        const rawDesc = m.note || m.description || "";
+        const desc = rawDesc.length > 90 ? rawDesc.substring(0, 90) + "…" : rawDesc;
+        const descHtml = desc ? `<div style="font-size:12px;color:#5A5A5A;margin-top:6px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${desc}</div>` : "";
+        popupEl.innerHTML = `
+          ${imgHtml}
+          <div style="padding:14px 16px 16px;">
+            <div style="font-family:'${displayFont}',serif;font-size:16px;color:#2D2D2D;line-height:1.2;font-weight:400;">${m.name}</div>
+            <div style="font-size:12px;color:#5A5A5A;margin-top:4px;">${m.addr}${isOffice ? " · Leasing office" : ""}</div>
+            ${descHtml}
+            <div style="display:flex;gap:8px;margin-top:12px;">
+              <a href="property-detail.html?property=${m.slug}" class="ys-popup-btn-primary" style="flex:1;text-align:center;padding:9px 0;background:${p.primary};color:#fff;text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;letter-spacing:0.01em;">View Details</a>
+              <a href="book-tour.html" class="ys-popup-btn-secondary" style="flex:1;text-align:center;padding:9px 0;background:transparent;color:${p.primary};text-decoration:none;font-size:12px;font-weight:600;border-radius:8px;border:1.5px solid ${p.primary};letter-spacing:0.01em;">Book a Tour</a>
+            </div>
+          </div>
+        `;
+
+        const popup = L.popup({ offset: [0, -30], closeButton: true, className: "ys-map-popup" })
+          .setContent(popupEl);
+
+        marker.bindPopup(popup);
+
+        marker.on("click", () => {
+          setActive(m.id);
+        });
+
+        markers.push(marker);
+      });
+
+      mapInstanceRef.current = map;
+      markersRef.current = markers;
+    } catch (err) {
+      console.error("[AlvinMap] Map initialization failed:", err);
+      setMapError(true);
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        try { mapInstanceRef.current.remove(); } catch (e) {}
+        mapInstanceRef.current = null;
+        markersRef.current = [];
+      }
+    };
+  }, [mapReady]);
+
+  // Focus marker when active changes from list or external prop
   useEffectS(() => {
     if (markersRef.current[active] && mapInstanceRef.current) {
       const marker = markersRef.current[active];
@@ -247,6 +329,46 @@ function AlvinMap({ p, displayFont }) {
       mapInstanceRef.current.panTo(marker.getLatLng(), { animate: true, duration: 0.5 });
     }
   }, [active]);
+
+  // Handle external focusedProperty prop
+  useEffectS(() => {
+    if (focusedProperty != null) {
+      const idx = props.findIndex(m => m.slug === focusedProperty);
+      if (idx >= 0) setActive(idx);
+    }
+  }, [focusedProperty]);
+
+  const Fallback = () => (
+    <div style={{
+      position: "relative",
+      height: isMobile ? 360 : "clamp(420px, 55vh, 580px)",
+      background: p.bg,
+      border: `1px solid ${p.line}`,
+      borderRadius: 8,
+      overflow: "hidden",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: 40, textAlign: "center"
+    }}>
+      <div>
+        <div style={{ fontSize: 36, marginBottom: 12 }}>🗺️</div>
+        <div style={{ fontFamily: `'${displayFont}', serif`, fontSize: 20, color: p.ink, marginBottom: 8 }}>
+          Map is currently unavailable.
+        </div>
+        <p style={{ fontSize: 15, color: p.inkSoft, maxWidth: "36ch", margin: "0 auto 16px", lineHeight: 1.55 }}>
+          Please view the property list below or contact us for directions.
+        </p>
+        <a href="properties.html" style={{
+          display: "inline-flex", alignItems: "center", gap: 8,
+          padding: "10px 18px", background: p.primary, color: p.paper,
+          textDecoration: "none", fontSize: 14, fontWeight: 600,
+          borderRadius: 8
+        }}>
+          View properties
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7m0 0L6.5 3m3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+        </a>
+      </div>
+    </div>
+  );
 
   return (
     <section id="map" style={{ padding: "80px var(--pad-x)" }}>
@@ -256,26 +378,26 @@ function AlvinMap({ p, displayFont }) {
             fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
             color: p.accent, fontWeight: 600, marginBottom: 14
           }}>
-            All within Alvin
+            Explore our communities
           </div>
           <h2 style={{
             fontFamily: `'${displayFont}', serif`,
             fontSize: "clamp(32px, 4vw, 52px)",
             lineHeight: 1.05, letterSpacing: "-0.02em",
-            margin: 0, color: p.ink, fontWeight: 400, maxWidth: "16ch"
-          }}>Five communities, one neighborhood.</h2>
+            margin: 0, color: p.ink, fontWeight: 400, maxWidth: "18ch"
+          }}>Find Apartments in Alvin</h2>
           <p style={{
             fontSize: 17, lineHeight: 1.6, color: p.inkSoft,
-            maxWidth: "50ch", marginTop: 16
-          }}>The furthest property is a seven-minute drive from our office.</p>
+            maxWidth: "52ch", marginTop: 16
+          }}>Click any property on the map to see details, or tap a location in the list to focus its pin.</p>
         </div>
 
         <div style={{
-          display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 24
+          display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1.6fr", gap: 24
         }} className="ys-map-grid">
           {/* List */}
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {MAP_PROPS.map(m => (
+            {props.map(m => (
               <button
                 key={m.id}
                 onMouseEnter={() => setActive(m.id)}
@@ -294,7 +416,7 @@ function AlvinMap({ p, displayFont }) {
                 }}
               >
                 <span style={{
-                  width: 26, height: 26, borderRadius: "50%",
+                  width: 28, height: 28, borderRadius: "50%",
                   background: m.office ? p.accent : p.primary,
                   color: p.paper,
                   display: "grid", placeItems: "center",
@@ -309,23 +431,99 @@ function AlvinMap({ p, displayFont }) {
                     {m.addr}{m.office ? " · Leasing office" : ""}
                   </div>
                 </div>
+                <a href={`property-detail.html?property=${m.slug}`} onClick={(e) => e.stopPropagation()} style={{
+                  fontSize: 12, fontWeight: 600, color: p.primary, textDecoration: "none",
+                  flexShrink: 0, padding: "4px 8px", borderRadius: 6,
+                  transition: "background 160ms ease"
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = p.bg}
+                onMouseOut={(e) => e.currentTarget.style.background = "transparent"}>
+                  View →
+                </a>
               </button>
             ))}
           </div>
 
-          {/* Real Map */}
+          {/* Map container */}
           <div
-            ref={mapRef}
+            ref={mapContainerRef}
             style={{
               position: "relative",
-              aspectRatio: "4/3",
+              height: isMobile ? 360 : "clamp(420px, 55vh, 580px)",
               background: p.paper,
               border: `1px solid ${p.line}`,
               borderRadius: 8,
-              overflow: "hidden",
-              minHeight: 320
+              overflow: "hidden"
             }}
-          />
+          >
+            {mapError ? (
+              <Fallback />
+            ) : (
+              <>
+                <div ref={mapRef} style={{ position: "absolute", inset: 0, zIndex: 1 }} />
+                {/* Mobile interaction overlay */}
+                {isMobile && !mapActive && !mapError && mapReady && (
+                  <div
+                    onClick={() => setMapActive(true)}
+                    style={{
+                      position: "absolute", inset: 0, zIndex: 10,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: `color-mix(in oklab, ${p.bg} 65%, transparent)`,
+                      backdropFilter: "blur(2px)",
+                      cursor: "pointer",
+                      WebkitTapHighlightColor: "transparent"
+                    }}
+                  >
+                    <div style={{
+                      background: p.paper, padding: "16px 24px", borderRadius: 12,
+                      boxShadow: "0 8px 32px rgba(27,42,74,0.12)", border: `1px solid ${p.line}`,
+                      display: "flex", alignItems: "center", gap: 12,
+                      pointerEvents: "none"
+                    }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={p.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                      </svg>
+                      <span style={{ fontSize: 14, fontWeight: 600, color: p.ink }}>
+                        Tap to interact with map
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {/* Re-lock button for mobile */}
+                {isMobile && mapActive && !mapError && mapReady && (
+                  <button
+                    onClick={() => setMapActive(false)}
+                    aria-label="Lock map interaction"
+                    style={{
+                      position: "absolute", top: 10, right: 10, zIndex: 10,
+                      width: 36, height: 36, borderRadius: "50%",
+                      background: p.paper, border: `1px solid ${p.line}`,
+                      display: "grid", placeItems: "center",
+                      cursor: "pointer", boxShadow: "0 2px 8px rgba(27,42,74,0.08)",
+                      color: p.ink, fontSize: 16, fontWeight: 600,
+                      fontFamily: "inherit"
+                    }}
+                  >✕</button>
+                )}
+                {/* Loading skeleton */}
+                {!mapReady && !mapError && (
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: p.bg
+                  }}>
+                    <div style={{
+                      width: 40, height: 40, borderRadius: "50%",
+                      border: `3px solid ${p.line}`,
+                      borderTopColor: p.accent,
+                      animation: "ys-spin 1s linear infinite"
+                    }} />
+                    <style>{`@keyframes ys-spin { to { transform: rotate(360deg); } }`}</style>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </section>

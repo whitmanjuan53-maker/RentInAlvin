@@ -56,6 +56,9 @@ const PROPERTIES = [
     id: "kings-haven",
     name: "Kings Haven Apartments",
     addr: "410 S 2nd St",
+    lat: 29.4218,
+    lng: -95.2442,
+    office: true,
     tag: "Flagship · Office on-site",
     units: "2BR · 1BA · 850 sq ft",
     price: "from $890",
@@ -77,6 +80,8 @@ const PROPERTIES = [
     id: "kings-manor",
     name: "Kings Manor Townhomes",
     addr: "328 S 2nd St",
+    lat: 29.4225,
+    lng: -95.2441,
     tag: "Townhome",
     units: "2BR · 2.5BA · 3BR · 2.5BA · 1,250 sq ft",
     price: "from $1,250",
@@ -98,6 +103,8 @@ const PROPERTIES = [
     id: "kings-haven-100",
     name: "Kings Haven Apartments",
     addr: "100 S 2nd St",
+    lat: 29.4245,
+    lng: -95.2439,
     tag: "Apartments",
     units: "2BR · 1BA · 850 sq ft",
     price: "from $850",
@@ -119,6 +126,8 @@ const PROPERTIES = [
     id: "french-quarter",
     name: "French Quarter Residency",
     addr: "2550 S Bypass 35",
+    lat: 29.3950,
+    lng: -95.2330,
     tag: "Apartments",
     units: "2BR · 1BA · 850 sq ft",
     price: "from $950",
@@ -140,6 +149,8 @@ const PROPERTIES = [
     id: "white-house",
     name: "The White House Apartments",
     addr: "1606 W Sealy St",
+    lat: 29.4260,
+    lng: -95.2550,
     tag: "Apartments",
     units: "2BR · 1BA · 850 sq ft",
     price: "from $900",
@@ -348,7 +359,7 @@ function SectionHead({ p, eyebrow, title, lead, displayFont, marginBottom }) {
 
 /* ----------------------------- properties ----------------------------- */
 
-function PropertyCard({ prop, p, idx, displayFont }) {
+function PropertyCard({ prop, p, idx, displayFont, onSelect }) {
   const [hover, setHover] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const hasImage = prop.heroImage && typeof prop.heroImage === "string" && prop.heroImage.startsWith("http");
@@ -356,6 +367,11 @@ function PropertyCard({ prop, p, idx, displayFont }) {
     <article
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={(e) => {
+        if (onSelect && !e.target.closest('a')) {
+          onSelect(prop.id);
+        }
+      }}
       style={{
         background: p.paper,
         border: `1px solid ${p.line}`,
@@ -364,7 +380,8 @@ function PropertyCard({ prop, p, idx, displayFont }) {
         display: "flex", flexDirection: "column",
         transition: "all 300ms ease",
         transform: hover ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hover ? "0 16px 40px -10px rgba(27, 42, 74, 0.14)" : "0 1px 4px rgba(27, 42, 74, 0.06)"
+        boxShadow: hover ? "0 16px 40px -10px rgba(27, 42, 74, 0.14)" : "0 1px 4px rgba(27, 42, 74, 0.06)",
+        cursor: onSelect ? "pointer" : "default"
       }}
     >
       <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: p.bg }}>
@@ -462,7 +479,7 @@ function PropertyCard({ prop, p, idx, displayFont }) {
   );
 }
 
-function Properties({ p, displayFont }) {
+function Properties({ p, displayFont, onPropertySelect }) {
   return (
     <section id="properties" style={{ padding: "80px var(--pad-x)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -478,7 +495,7 @@ function Properties({ p, displayFont }) {
           gap: 20
         }}>
           {PROPERTIES.map((prop, i) =>
-            <PropertyCard key={i} prop={prop} p={p} idx={i} displayFont={displayFont} />
+            <PropertyCard key={i} prop={prop} p={p} idx={i} displayFont={displayFont} onSelect={onPropertySelect} />
           )}
         </div>
       </div>
