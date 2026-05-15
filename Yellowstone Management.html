@@ -394,7 +394,10 @@
         sessionStorage.setItem('ysLookLeaseShown', '1');
       }
       window.closeYsPopup = closePopup;
-      setTimeout(openPopup, 3000);
+      var isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+      if (!isMobile) {
+        setTimeout(openPopup, 6000);
+      }
       var popup = document.getElementById('ysLookLeasePopup');
       if (popup) {
         popup.addEventListener('click', function(e) { if (e.target === popup) closePopup(); });
