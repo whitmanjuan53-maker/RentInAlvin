@@ -382,29 +382,8 @@ app.post('/api/submit/inquiry', formLimiter, (req, res) => {
 // ============================================================
 
 // Serve static assets with proper content types
-// Vercel serverless functions run from a build directory; try multiple roots
-const fs = require('fs');
-function findStaticRoot() {
-  const candidates = [
-    process.env.VERCEL ? process.cwd() : null,
-    path.join(__dirname, '..'),
-    __dirname,
-    process.cwd()
-  ].filter(Boolean);
-  for (const dir of candidates) {
-    if (fs.existsSync(path.join(dir, 'index.html'))) {
-      console.log('[Static] Using root:', dir);
-      return dir;
-    }
-  }
-  console.log('[Static] Fallback to __dirname:', __dirname);
-  return __dirname;
-}
-const STATIC_ROOT = findStaticRoot();
-console.log('[Static] __dirname:', __dirname);
-console.log('[Static] cwd:', process.cwd());
-console.log('[Static] VERCEL:', process.env.VERCEL);
-console.log('[Static] STATIC_ROOT:', STATIC_ROOT);
+// On Vercel, static files are included via vercel.json includeFiles config
+const STATIC_ROOT = __dirname;
 app.use(express.static(path.join(STATIC_ROOT), {
   setHeaders: (res, filepath) => {
     if (filepath.endsWith('.jsx')) {
@@ -412,20 +391,6 @@ app.use(express.static(path.join(STATIC_ROOT), {
     }
   }
 }));
-
-// Debug endpoint to inspect filesystem
-app.get('/__debug/fs', (req, res) => {
-  const dirs = [__dirname, process.cwd(), path.join(__dirname, '..'), '/var/task', '/tmp'];
-  const result = {};
-  for (const dir of dirs) {
-    try {
-      result[dir] = fs.readdirSync(dir).slice(0, 20);
-    } catch (e) {
-      result[dir] = e.message;
-    }
-  }
-  res.json({ STATIC_ROOT, __dirname, cwd: process.cwd(), dirs: result });
-});
 
 // Fallback to index.html for unmatched routes (return JSON for API 404s)
 app.use((req, res) => {
