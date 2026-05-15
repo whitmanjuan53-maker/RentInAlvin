@@ -1,18 +1,26 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "framework": null,
-  "buildCommand": "npm run build",
-  "installCommand": "npm ci --no-audit --no-fund",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "{js/**,images/**,data/**,*.html,api-client.js,*.css}"
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "js/**",
+          "images/**",
+          "data/**",
+          "*.html",
+          "api-client.js",
+          "*.css"
+        ]
+      }
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/index.js"
+      "dest": "api/index.js"
     }
   ]
 }

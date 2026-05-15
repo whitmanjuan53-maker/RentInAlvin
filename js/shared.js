@@ -325,7 +325,7 @@ function Nav({
       letterSpacing: "0.01em",
       transition: "color 160ms ease",
       borderBottom: currentPage === link.id ? `2px solid ${p.accent}` : "2px solid transparent",
-      padding: "8px 4px"
+      paddingBottom: 2
     },
     onMouseOver: e => {
       if (currentPage !== link.id) e.currentTarget.style.color = p.accent;
@@ -357,14 +357,13 @@ function Nav({
     className: "ys-nav-burger",
     onClick: () => setMenuOpen(o => !o),
     "aria-label": "Menu",
-    "aria-expanded": menuOpen,
     style: {
       display: "none",
       background: "transparent",
       border: `1px solid ${p.line}`,
       borderRadius: 6,
-      width: 48,
-      height: 48,
+      width: 40,
+      height: 40,
       padding: 0,
       cursor: "pointer",
       alignItems: "center",
@@ -421,13 +420,10 @@ function Nav({
     style: {
       color: p.ink,
       textDecoration: "none",
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: currentPage === link.id ? 600 : 500,
-      padding: "14px 0",
-      borderBottom: `1px solid ${p.line}`,
-      display: "flex",
-      alignItems: "center",
-      minHeight: 48
+      padding: "10px 0",
+      borderBottom: `1px solid ${p.line}`
     }
   }, link.label)), /*#__PURE__*/React.createElement("a", {
     href: "tel:8322103968",
@@ -675,16 +671,14 @@ function PropertyCard({
   }, /*#__PURE__*/React.createElement("a", {
     href: `property-detail.html?property=${prop.id}`,
     style: {
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: 600,
       color: p.primary,
       textDecoration: "none",
       display: "inline-flex",
       alignItems: "center",
       gap: 6,
-      transition: "color 200ms ease",
-      padding: "6px 4px",
-      minHeight: 44
+      transition: "color 200ms ease"
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
     onMouseOut: e => e.currentTarget.style.color = p.primary
@@ -696,16 +690,14 @@ function PropertyCard({
   }, "|"), /*#__PURE__*/React.createElement("a", {
     href: "book-tour.html",
     style: {
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: 600,
       color: p.ink,
       textDecoration: "none",
       display: "inline-flex",
       alignItems: "center",
       gap: 6,
-      transition: "color 200ms ease",
-      padding: "6px 4px",
-      minHeight: 44
+      transition: "color 200ms ease"
     },
     onMouseOver: e => e.currentTarget.style.color = p.accent,
     onMouseOut: e => e.currentTarget.style.color = p.ink

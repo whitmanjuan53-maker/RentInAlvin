@@ -576,7 +576,7 @@ function Apply({
       color: data.pets === v ? p.paper : p.ink,
       border: `1px solid ${data.pets === v ? p.ink : p.line}`,
       borderRadius: 10,
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: 500,
       cursor: "pointer",
       fontFamily: "inherit",

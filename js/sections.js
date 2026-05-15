@@ -136,17 +136,16 @@ function Availability({
     key: k,
     onClick: () => setFilter(k),
     style: {
-      padding: "10px 18px",
+      padding: "8px 16px",
       background: filter === k ? p.ink : "transparent",
       color: filter === k ? p.paper : p.ink,
       border: `1px solid ${filter === k ? p.ink : p.line}`,
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: 500,
       cursor: "pointer",
       fontFamily: "inherit",
       borderRadius: 10,
-      transition: "all 200ms ease",
-      minHeight: 44
+      transition: "all 200ms ease"
     }
   }, label)))), /*#__PURE__*/React.createElement("div", {
     className: "ys-avail-grid",
@@ -505,9 +504,14 @@ function AlvinMap({
           latLngs.push([m.lat, m.lng]);
           markers.push(marker);
         });
+
+        // Fit bounds to show all markers with padding
         if (latLngs.length > 0) {
           const bounds = L.latLngBounds(latLngs);
-          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+          map.fitBounds(bounds, {
+            padding: [50, 50],
+            maxZoom: 15
+          });
         }
         mapInstanceRef.current = map;
         markersRef.current = markers;
