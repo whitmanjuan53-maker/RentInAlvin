@@ -393,12 +393,18 @@ function findStaticRoot() {
   ].filter(Boolean);
   for (const dir of candidates) {
     if (fs.existsSync(path.join(dir, 'index.html'))) {
+      console.log('[Static] Using root:', dir);
       return dir;
     }
   }
+  console.log('[Static] Fallback to __dirname:', __dirname);
   return __dirname;
 }
 const STATIC_ROOT = findStaticRoot();
+console.log('[Static] __dirname:', __dirname);
+console.log('[Static] cwd:', process.cwd());
+console.log('[Static] VERCEL:', process.env.VERCEL);
+console.log('[Static] STATIC_ROOT:', STATIC_ROOT);
 app.use(express.static(path.join(STATIC_ROOT), {
   setHeaders: (res, filepath) => {
     if (filepath.endsWith('.jsx')) {
