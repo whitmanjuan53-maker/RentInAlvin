@@ -399,10 +399,10 @@ function AlvinMap({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Initialize Leaflet immediately on mount
+  // Initialize Leaflet with robust container sizing
   useEffectS(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
-    const timer = setTimeout(() => {
+    const initMap = () => {
       if (typeof L === "undefined") {
         console.error("[AlvinMap] Leaflet library not loaded.");
         setMapError(true);
@@ -410,14 +410,25 @@ function AlvinMap({
       }
       try {
         const container = mapRef.current;
-        if (!container || container.clientWidth === 0 || container.clientHeight === 0) {
-          console.error("[AlvinMap] Map container has zero dimensions.");
+        if (!container) {
           setMapError(true);
           return;
         }
+        // Force explicit pixel dimensions before Leaflet reads them
+        const parent = container.parentElement;
+        const w = parent ? parent.clientWidth : container.clientWidth;
+        const h = parent ? parent.clientHeight : container.clientHeight;
+        if (w === 0 || h === 0) {
+          console.error("[AlvinMap] Map container has zero dimensions.", w, h);
+          setMapError(true);
+          return;
+        }
+        container.style.width = w + "px";
+        container.style.height = h + "px";
         const map = L.map(container, {
           scrollWheelZoom: false,
-          attributionControl: false
+          attributionControl: false,
+          zoomControl: true
         }).setView([29.415, -95.240], 13);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
@@ -472,11 +483,7 @@ function AlvinMap({
             className: "ys-map-popup"
           }).setContent(popupEl);
           marker.bindPopup(popup);
-
-          // Track popup state to prevent reopening after manual close
           popup.on('popupclose', () => {
-            // Only clear active if this marker was the active one
-            // Use activeRef to avoid stale closure
             if (markersRef.current[activeRef.current] === marker) {
               setActive(-1);
             }
@@ -489,24 +496,34 @@ function AlvinMap({
         mapInstanceRef.current = map;
         markersRef.current = markers;
         setMapLoaded(true);
-        // Ensure Leaflet recalculates container dimensions after layout settles
-        // Multiple calls at different times to handle various layout scenarios
-        const invalidate = () => {
-          if (map) map.invalidateSize({
+
+        // Robust size recalculation after layout fully settles
+        const fixSize = () => {
+          if (!map) return;
+          map.invalidateSize({
             animate: false,
             pan: false
           });
+          // Reset pixel origin to fix tile drift
+          const center = map.getCenter();
+          const zoom = map.getZoom();
+          map.setView(center, zoom, {
+            animate: false
+          });
         };
-        requestAnimationFrame(invalidate);
-        setTimeout(invalidate, 100);
-        setTimeout(invalidate, 300);
-        setTimeout(invalidate, 600);
-        setTimeout(invalidate, 1000);
+        requestAnimationFrame(fixSize);
+        setTimeout(fixSize, 200);
+        setTimeout(fixSize, 500);
+        setTimeout(fixSize, 1000);
+        setTimeout(fixSize, 2000);
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
       }
-    }, 300);
+    };
+
+    // Delay init to ensure parent layout is computed
+    const timer = setTimeout(initMap, 400);
     return () => {
       clearTimeout(timer);
       if (mapInstanceRef.current) {
@@ -860,26 +877,24 @@ function AlvinMap({
     }, "View \u2192"));
   })), /*#__PURE__*/React.createElement("div", {
     ref: mapContainerRef,
+    className: "ys-map-wrap",
     style: {
       position: "relative",
       width: "100%",
       height: isMobile ? 380 : "clamp(420px, 55vh, 580px)",
+      minHeight: isMobile ? 380 : 420,
       background: p.paper,
       border: `1px solid ${p.line}`,
       borderRadius: 12,
       overflow: "hidden",
       touchAction: "auto",
-      minHeight: isMobile ? 380 : 420
+      contain: "layout paint"
     }
   }, mapError ? /*#__PURE__*/React.createElement(Fallback, null) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     ref: mapRef,
     style: {
-      position: "absolute",
-      top: 0,
-      left: 0,
       width: "100%",
-      height: "100%",
-      zIndex: 1
+      height: "100%"
     }
   }), !mapLoaded && /*#__PURE__*/React.createElement("div", {
     style: {
