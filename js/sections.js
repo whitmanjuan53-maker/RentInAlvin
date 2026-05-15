@@ -374,6 +374,10 @@ function AlvinMap({
   const mapRef = useRefS(null);
   const mapInstanceRef = useRefS(null);
   const markersRef = useRefS([]);
+  const activeRef = useRefS(0);
+  useEffectS(() => {
+    activeRef.current = active;
+  }, [active]);
   useEffectS(() => {
     const check = () => setIsMobile(window.innerWidth <= 960);
     check();
@@ -454,6 +458,15 @@ function AlvinMap({
             className: "ys-map-popup"
           }).setContent(popupEl);
           marker.bindPopup(popup);
+
+          // Track popup state to prevent reopening after manual close
+          popup.on('popupclose', () => {
+            // Only clear active if this marker was the active one
+            // Use activeRef to avoid stale closure
+            if (markersRef.current[activeRef.current] === marker) {
+              setActive(-1);
+            }
+          });
           marker.on("click", () => {
             setActive(m.id);
           });
@@ -463,14 +476,15 @@ function AlvinMap({
         markersRef.current = markers;
         setMapLoaded(true);
         // Ensure Leaflet recalculates container dimensions after layout settles
-        requestAnimationFrame(() => {
-          map.invalidateSize();
-        });
+        // Multiple calls at different times to handle various layout scenarios
+        requestAnimationFrame(() => map.invalidateSize());
+        setTimeout(() => map.invalidateSize(), 100);
+        setTimeout(() => map.invalidateSize(), 500);
       } catch (err) {
         console.error("[AlvinMap] Map initialization failed:", err);
         setMapError(true);
       }
-    }, 200);
+    }, 300);
     return () => {
       clearTimeout(timer);
       if (mapInstanceRef.current) {

@@ -83,7 +83,7 @@ try {
 
   console.log('[DB] SQLite connected at', DB_PATH);
 } catch (err) {
-  console.error('[DB] Failed to initialize SQLite:', err.message);
+  console.error('[DB] Failed to initialize SQLite:', err instanceof Error ? err.message : String(err));
   console.error('[DB] Leads will be logged but not persisted.');
 }
 

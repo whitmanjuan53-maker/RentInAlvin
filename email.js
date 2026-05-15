@@ -65,7 +65,7 @@ async function verifyConnection() {
     console.log(`[Email] ${EMAIL_PROVIDER.toUpperCase()} connection verified successfully`);
     return true;
   } catch (err) {
-    console.error(`[Email] ${EMAIL_PROVIDER.toUpperCase()} connection failed:`, err.message);
+    console.error(`[Email] ${EMAIL_PROVIDER.toUpperCase()} connection failed:`, err instanceof Error ? err.message : String(err));
     console.error('[Email] Emails will be logged to console but not sent. Check your .env configuration.');
     return false;
   }
@@ -165,8 +165,8 @@ async function sendLeadEmail(lead) {
     console.log('[Email] Sent:', info.messageId);
     return { sent: true, messageId: info.messageId };
   } catch (err) {
-    console.error('[Email] Failed to send:', err.message);
-    return { sent: false, reason: err.message };
+    console.error('[Email] Failed to send:', err instanceof Error ? err.message : String(err));
+    return { sent: false, reason: err instanceof Error ? err.message : String(err) };
   }
 }
 

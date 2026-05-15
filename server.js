@@ -170,7 +170,7 @@ app.get('/api/leads', requireAdmin, (req, res) => {
       lead_type: req.query.type,
       assigned_to: req.query.assigned_to,
       search: req.query.search,
-      limit: req.query.limit ? parseInt(req.query.limit, 10) : undefined
+      limit: typeof req.query.limit === 'string' ? parseInt(req.query.limit, 10) : undefined
     };
     const leads = getLeads(filters);
     res.json(leads);
