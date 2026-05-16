@@ -26,7 +26,7 @@ function HomePage() {
       <Nav p={p} currentPage="home" />
 
       {/* Hero */}
-      <section className="ys-hero" style={{
+      <section className="ys-hero ys-home-hero" style={{
         position: "relative",
         padding: "60px 24px 0",
         minHeight: "calc(100vh - 260px)",
@@ -35,7 +35,19 @@ function HomePage() {
         justifyContent: "space-between",
         overflow: "hidden"
       }}>
-        <style>{"@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"}</style>
+        <style>{`
+          @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
+          @media (max-width: 768px) {
+            .ys-home-hero { padding: 46px 20px 16px !important; min-height: auto !important; }
+            .ys-home-hero-title { font-size: clamp(42px, 13.5vw, 64px) !important; line-height: 1.02 !important; letter-spacing: -0.02em !important; max-width: 12ch !important; }
+            .ys-home-hero-lead { font-size: 16px !important; line-height: 1.65 !important; max-width: 36ch !important; margin-top: 18px !important; }
+            .ys-home-hero-cta { margin-top: 20px !important; gap: 10px !important; }
+            .ys-home-hero-cta a { width: 100%; justify-content: center; text-align: center; }
+          }
+          @media (max-width: 420px) {
+            .ys-home-hero-title { font-size: clamp(38px, 12.8vw, 54px) !important; }
+          }
+        `}</style>
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0,
           backgroundImage: "url(images/hero-aerial.jpg)",
@@ -49,7 +61,7 @@ function HomePage() {
           background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
         }} />
         <div className="ys-hero-content" style={{ maxWidth: 1400, margin: "0 auto", width: "100%", flex: "1 0 auto", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <h1 style={{
+          <h1 className="ys-home-hero-title" style={{
             fontFamily: `'${displayFont}', serif`,
             fontSize: "clamp(56px, 8vw, 120px)",
             lineHeight: 0.95,
@@ -63,14 +75,14 @@ function HomePage() {
             made simple.
           </h1>
 
-          <p style={{
+          <p className="ys-home-hero-lead" style={{
             fontSize: 20, lineHeight: 1.6, color: p.inkSoft,
             maxWidth: "52ch", margin: "24px 0 0"
           }}>
-            Yellowstone Asset Management manages over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
+            Yellowstone Asset Management manages over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, maintained by a local team.
           </p>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
+          <div className="ys-home-hero-cta" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
             <a href="book-tour.html" style={{
               padding: "14px 24px", background: p.primary, color: p.paper,
               textDecoration: "none", fontSize: 15, fontWeight: 600,
@@ -102,7 +114,7 @@ function HomePage() {
       {tweaks.showStats && (
         <section style={{
           background: p.paper,
-          padding: "24px var(--pad-x)",
+          padding: "30px var(--pad-x)",
           borderTop: `1px solid ${p.line}`
         }}>
           <div style={{

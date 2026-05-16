@@ -39,7 +39,7 @@ function HomePage() {
     p: p,
     currentPage: "home"
   }), /*#__PURE__*/React.createElement("section", {
-    className: "ys-hero",
+    className: "ys-hero ys-home-hero",
     style: {
       position: "relative",
       padding: "60px 24px 0",
@@ -49,7 +49,19 @@ function HomePage() {
       justifyContent: "space-between",
       overflow: "hidden"
     }
-  }, /*#__PURE__*/React.createElement("style", null, "@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("style", null, `
+          @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
+          @media (max-width: 768px) {
+            .ys-home-hero { padding: 46px 20px 16px !important; min-height: auto !important; }
+            .ys-home-hero-title { font-size: clamp(42px, 13.5vw, 64px) !important; line-height: 1.02 !important; letter-spacing: -0.02em !important; max-width: 12ch !important; }
+            .ys-home-hero-lead { font-size: 16px !important; line-height: 1.65 !important; max-width: 36ch !important; margin-top: 18px !important; }
+            .ys-home-hero-cta { margin-top: 20px !important; gap: 10px !important; }
+            .ys-home-hero-cta a { width: 100%; justify-content: center; text-align: center; }
+          }
+          @media (max-width: 420px) {
+            .ys-home-hero-title { font-size: clamp(38px, 12.8vw, 54px) !important; }
+          }
+        `), /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute",
       top: 0,
@@ -85,6 +97,7 @@ function HomePage() {
       justifyContent: "center"
     }
   }, /*#__PURE__*/React.createElement("h1", {
+    className: "ys-home-hero-title",
     style: {
       fontFamily: `'${displayFont}', serif`,
       fontSize: "clamp(56px, 8vw, 120px)",
@@ -100,6 +113,7 @@ function HomePage() {
       color: p.primary
     }
   }, "Alvin,"), /*#__PURE__*/React.createElement("br", null), "made simple."), /*#__PURE__*/React.createElement("p", {
+    className: "ys-home-hero-lead",
     style: {
       fontSize: 20,
       lineHeight: 1.6,
@@ -111,7 +125,8 @@ function HomePage() {
     style: {
       color: p.ink
     }
-  }, "160 units across five properties"), " in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team."), /*#__PURE__*/React.createElement("div", {
+  }, "160 units across five properties"), " in Alvin. Apartments and townhomes from $800 to $1,650, maintained by a local team."), /*#__PURE__*/React.createElement("div", {
+    className: "ys-home-hero-cta",
     style: {
       display: "flex",
       gap: 12,
@@ -176,7 +191,7 @@ function HomePage() {
   }, "See properties")))), tweaks.showStats && /*#__PURE__*/React.createElement("section", {
     style: {
       background: p.paper,
-      padding: "24px var(--pad-x)",
+      padding: "30px var(--pad-x)",
       borderTop: `1px solid ${p.line}`
     }
   }, /*#__PURE__*/React.createElement("div", {
