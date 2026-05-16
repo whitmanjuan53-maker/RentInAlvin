@@ -486,16 +486,14 @@ function Hero({
   }, /*#__PURE__*/React.createElement("style", null, `
         @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
         @media (max-width: 540px) {
-          .ys-hero { padding-top: 120px !important; padding-bottom: 32px !important; }
           .ys-hero-content { text-align: center !important; }
-          .ys-hero h1 { font-size: clamp(30px, 9vw, 44px) !important; line-height: 1.1 !important; letter-spacing: -0.02em !important; max-width: none !important; margin-bottom: 16px !important; margin-left: auto !important; margin-right: auto !important; }
+          .ys-hero h1 { font-size: clamp(30px, 9vw, 44px) !important; line-height: 1.1 !important; letter-spacing: -0.02em !important; max-width: none !important; margin-bottom: 20px !important; margin-left: auto !important; margin-right: auto !important; }
           .ys-hero h1 br { display: none !important; }
-          .ys-hero-row { margin-top: 0 !important; gap: 24px !important; align-items: center !important; }
+          .ys-hero-row { margin-top: 0 !important; gap: 20px !important; align-items: center !important; }
           .ys-hero-row > p { font-size: 15px !important; line-height: 1.6 !important; max-width: 36ch !important; margin-left: auto !important; margin-right: auto !important; color: #5a5a5a !important; }
-          .ys-hero-actions { flex-direction: column !important; gap: 12px !important; width: 100% !important; margin-top: 16px !important; }
+          .ys-hero-actions { flex-direction: column !important; gap: 10px !important; width: 100% !important; margin-top: 8px !important; }
           .ys-hero-actions a { width: 100% !important; justify-content: center !important; text-align: center !important; padding: 14px 24px !important; font-size: 15px !important; border-radius: 10px !important; }
           .ys-hero-stat { border-left: none !important; padding-left: 0 !important; padding-top: 14px !important; padding-bottom: 14px !important; }
-          .ys-hero-stats { grid-template-columns: 1fr 1fr !important; gap: 16px 12px !important; }
         }
       `), /*#__PURE__*/React.createElement("div", {
     style: {

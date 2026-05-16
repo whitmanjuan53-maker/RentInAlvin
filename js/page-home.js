@@ -52,16 +52,14 @@ function HomePage() {
   }, /*#__PURE__*/React.createElement("style", null, `
           @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
           @media (max-width: 768px) {
-            .ys-home-hero { padding: 120px 20px 32px !important; min-height: auto !important; }
-            .ys-home-hero-title { font-size: clamp(42px, 13.5vw, 64px) !important; line-height: 1.05 !important; letter-spacing: -0.02em !important; max-width: 12ch !important; margin-bottom: 12px !important; }
-            .ys-home-hero-lead { font-size: 16px !important; line-height: 1.65 !important; max-width: 36ch !important; margin-top: 28px !important; }
-            .ys-home-hero-cta { margin-top: 28px !important; gap: 12px !important; }
+            .ys-home-hero { padding: 80px 20px 40px !important; min-height: 100vh !important; min-height: 100dvh !important; justify-content: flex-end !important; }
+            .ys-home-hero-title { font-size: clamp(40px, 12vw, 60px) !important; line-height: 1.02 !important; letter-spacing: -0.02em !important; max-width: 14ch !important; }
+            .ys-home-hero-lead { font-size: 16px !important; line-height: 1.55 !important; max-width: 38ch !important; margin-top: 14px !important; }
+            .ys-home-hero-cta { margin-top: 20px !important; gap: 10px !important; }
             .ys-home-hero-cta a { width: 100%; justify-content: center; text-align: center; }
-            .ys-hero-stats { grid-template-columns: 1fr 1fr !important; gap: 20px 16px !important; padding-top: 8px !important; padding-bottom: 8px !important; }
-            .ys-hero-stats > div { border-left: none !important; padding-left: 0 !important; text-align: center !important; }
           }
           @media (max-width: 420px) {
-            .ys-home-hero-title { font-size: clamp(38px, 12.8vw, 54px) !important; }
+            .ys-home-hero-title { font-size: clamp(36px, 11vw, 50px) !important; }
           }
         `), /*#__PURE__*/React.createElement("div", {
     style: {

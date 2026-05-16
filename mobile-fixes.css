@@ -397,9 +397,19 @@ img {
     height: 38px !important;
   }
 
-  /* Hero: unified header feel with generous padding */
-  .ys-hero,
+  /* Hero: full-viewport background image on mobile home page */
   .ys-home-hero {
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+
+  /* Other pages: keep compact auto-height hero */
+  .ys-hero {
     padding-top: 120px !important;
     padding-bottom: 32px !important;
     min-height: auto !important;
