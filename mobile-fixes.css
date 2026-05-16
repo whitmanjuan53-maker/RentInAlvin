@@ -87,9 +87,10 @@ a, button, [role="button"] {
 
 /* Hero breathing room on small screens */
 @media (max-width: 540px) {
-  .ys-hero {
-    padding-top: 80px !important;
-    padding-bottom: 28px !important;
+  .ys-hero,
+  .ys-home-hero {
+    padding-top: 120px !important;
+    padding-bottom: 32px !important;
   }
 }
 
@@ -374,5 +375,65 @@ img {
   }
   .ys-floor-meta {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   HERO MOBILE REFINEMENTS — proper spacing, less clutter
+   ============================================================ */
+
+@media (max-width: 540px) {
+  /* Compact nav so hero can breathe */
+  .ys-nav {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  .ys-nav > a > div > span {
+    font-size: 16px !important;
+    letter-spacing: 0 !important;
+  }
+  .ys-nav-burger {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  /* Hero: unified header feel with generous padding */
+  .ys-hero,
+  .ys-home-hero {
+    padding-top: 120px !important;
+    padding-bottom: 32px !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  /* Hero row: single column, centered, tight gap */
+  .ys-hero-row {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    margin-top: 0 !important;
+    align-items: center !important;
+  }
+
+  /* Stats: 2×2 grid instead of a tall single column */
+  .ys-hero-stats {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px 12px !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+  .ys-hero-stats > div {
+    border-left: none !important;
+    padding-left: 0 !important;
+    text-align: center !important;
+  }
+  .ys-hero-stats > div > div:first-child {
+    font-size: clamp(28px, 8vw, 40px) !important;
+  }
+  .ys-hero-stats > div > div:last-child {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 6px !important;
   }
 }

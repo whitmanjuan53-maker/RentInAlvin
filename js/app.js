@@ -483,7 +483,21 @@ function Hero({
       justifyContent: "space-between",
       overflow: "hidden"
     }
-  }, /*#__PURE__*/React.createElement("style", null, "@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("style", null, `
+        @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
+        @media (max-width: 540px) {
+          .ys-hero { padding-top: 120px !important; padding-bottom: 32px !important; }
+          .ys-hero-content { text-align: center !important; }
+          .ys-hero h1 { font-size: clamp(30px, 9vw, 44px) !important; line-height: 1.1 !important; letter-spacing: -0.02em !important; max-width: none !important; margin-bottom: 16px !important; margin-left: auto !important; margin-right: auto !important; }
+          .ys-hero h1 br { display: none !important; }
+          .ys-hero-row { margin-top: 0 !important; gap: 24px !important; align-items: center !important; }
+          .ys-hero-row > p { font-size: 15px !important; line-height: 1.6 !important; max-width: 36ch !important; margin-left: auto !important; margin-right: auto !important; color: #5a5a5a !important; }
+          .ys-hero-actions { flex-direction: column !important; gap: 12px !important; width: 100% !important; margin-top: 16px !important; }
+          .ys-hero-actions a { width: 100% !important; justify-content: center !important; text-align: center !important; padding: 14px 24px !important; font-size: 15px !important; border-radius: 10px !important; }
+          .ys-hero-stat { border-left: none !important; padding-left: 0 !important; padding-top: 14px !important; padding-bottom: 14px !important; }
+          .ys-hero-stats { grid-template-columns: 1fr 1fr !important; gap: 16px 12px !important; }
+        }
+      `), /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute",
       top: 0,
@@ -508,6 +522,7 @@ function Hero({
       background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "ys-hero-content",
     style: {
       position: "relative",
       zIndex: 2,
@@ -552,6 +567,7 @@ function Hero({
       color: p.ink
     }
   }, "160 units across five properties"), " in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team."), /*#__PURE__*/React.createElement("div", {
+    className: "ys-hero-actions",
     style: {
       display: "flex",
       gap: 14,
@@ -640,6 +656,7 @@ function Hero({
     className: "ys-hero-stats"
   }, [["150+", "units managed"], ["5", "properties in Alvin"], ["$899", "starting rent"], ["Local", "family-run team"]].map(([n, label], i) => /*#__PURE__*/React.createElement("div", {
     key: i,
+    className: "ys-hero-stat",
     style: {
       borderLeft: i === 0 ? "none" : `1px solid ${p.line}`,
       paddingLeft: i === 0 ? 0 : 28

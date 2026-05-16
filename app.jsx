@@ -386,7 +386,19 @@ function Hero({ p, displayFont, showStats }) {
       display: "flex", flexDirection: "column", justifyContent: "space-between",
       overflow: "hidden"
     }}>
-      <style>{"@keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }"}</style>
+      <style>{`
+        @keyframes kenBurnsHome { 0%{transform:scale(1)} 100%{transform:scale(1.1)} }
+        @media (max-width: 540px) {
+          .ys-hero-content { text-align: center !important; }
+          .ys-hero h1 { font-size: clamp(30px, 9vw, 44px) !important; line-height: 1.1 !important; letter-spacing: -0.02em !important; max-width: none !important; margin-bottom: 20px !important; margin-left: auto !important; margin-right: auto !important; }
+          .ys-hero h1 br { display: none !important; }
+          .ys-hero-row { margin-top: 0 !important; gap: 20px !important; align-items: center !important; }
+          .ys-hero-row > p { font-size: 15px !important; line-height: 1.6 !important; max-width: 36ch !important; margin-left: auto !important; margin-right: auto !important; color: #5a5a5a !important; }
+          .ys-hero-actions { flex-direction: column !important; gap: 10px !important; width: 100% !important; margin-top: 8px !important; }
+          .ys-hero-actions a { width: 100% !important; justify-content: center !important; text-align: center !important; padding: 14px 24px !important; font-size: 15px !important; border-radius: 10px !important; }
+          .ys-hero-stat { border-left: none !important; padding-left: 0 !important; padding-top: 14px !important; padding-bottom: 14px !important; }
+        }
+      `}</style>
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0,
         backgroundImage: "url(images/hero-aerial.jpg)",
@@ -400,7 +412,7 @@ function Hero({ p, displayFont, showStats }) {
         background: "linear-gradient(120deg, rgba(250,250,248,0.88) 0%, rgba(250,250,248,0.70) 45%, rgba(250,250,248,0.45) 75%, rgba(250,250,248,0.30) 100%)"
       }} />
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", width: "100%" }}>
+      <div className="ys-hero-content" style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", width: "100%" }}>
         <h1 style={{
           fontFamily: `'${displayFont}', serif`,
           fontSize: "clamp(52px, 7vw, 108px)",
@@ -428,7 +440,7 @@ function Hero({ p, displayFont, showStats }) {
           }}>
             Yellowstone Asset Management cares for over <strong style={{ color: p.ink }}>160 units across five properties</strong> in Alvin. Apartments and townhomes from $800 to $1,650, leased and maintained by a local team.
           </p>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <div className="ys-hero-actions" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a href="book-tour.html" style={{
               padding: "15px 28px", background: p.primary, color: p.paper,
               textDecoration: "none", fontSize: 15, fontWeight: 600,
@@ -476,7 +488,7 @@ function Hero({ p, displayFont, showStats }) {
             ["$899", "starting rent"],
             ["Local", "family-run team"]
           ].map(([n, label], i) => (
-            <div key={i} style={{
+            <div key={i} className="ys-hero-stat" style={{
               borderLeft: i === 0 ? "none" : `1px solid ${p.line}`,
               paddingLeft: i === 0 ? 0 : 28
             }}>
